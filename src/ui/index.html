@@ -35,11 +35,9 @@ details{max-width:860px;margin:6px auto 0}pre{white-space:pre-wrap;font-size:12p
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));let S={},seen=-1;
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'content-type':'application/json','x-demo':'1'},body:JSON.stringify(b||{})}).then(r=>r.json()).then(j=>{if(j.error)alert(j.error);setTimeout(load,300);return j});
 const CHIPS=[
-  'Je veux un stage M&A en césure dès mars 2027 à Paris, pas de finance durable',
-  'Accepte aussi les offres débutant en janvier 2027',
   'Prépare les 5 meilleures',
   'Où en es-tu ?',
-  'Contacts : Julie Martin, Analyst M&A, Lazard ; Thomas Petit, VP DCM, BNP Paribas'
+  'Accepte aussi les offres qui commencent plus tôt'
 ];
 $('chips').innerHTML=CHIPS.map(c=>`<button onclick="$('msg').value=this.textContent">${esc(c)}</button>`).join('');
 function send(){const t=$('msg').value.trim();if(!t)return;$('msg').value='';post('/api/chat',{text:t})}
@@ -63,9 +61,13 @@ function drafts(){return (S.queue||[]).map(x=>`<div class="row"><div class="grow
 <input type="text" id="s_${x.id}" value="${esc(x.subject)}" style="margin:6px 0"><textarea id="b_${x.id}">${esc(x.body)}</textarea>
 <div style="display:flex;gap:6px;margin-top:6px"><button onclick="post('/api/network/${x.id}/edit',{subject:$('s_${x.id}').value,body:$('b_${x.id}').value})">Modifier</button><button onclick="post('/api/network/${x.id}/reject')">Rejeter</button><button class="p" onclick="post('/api/network/${x.id}/approve')">Valider</button>
 <button ${x.status!='approved'?'disabled':''} onclick="if(confirm('Envoyer maintenant${S.testMode?' (vers l’adresse de test)':''} ?'))post('/api/network/${x.id}/send',{real:true,confirm:'ENVOYER',schedule:false})">Envoyer</button></div></div></div>`).join('')}
-function render(){const c=S.chat||[];if(c.length===seen)return;seen=c.length;
- $('log').innerHTML=c.map((m,i)=>`<div class="m ${m.role}"><div class="b"><div class="t">${esc(m.text)}</div>${m.type=='shortlist'?shortlist(m.data,i):m.type=='applications'?apps(m.data):m.type=='drafts'&&i==c.map(x=>x.type).lastIndexOf('drafts')?drafts():''}</div></div>`).join('')||'<p class="mute">Écris ce que tu cherches, par exemple : « Je veux un stage M&A en césure dès mars 2027 à Paris ».</p>';
- $('log').scrollTop=$('log').scrollHeight}
+let sig='';
+function render(){const c=S.chat||[];const next=JSON.stringify([c,S.queue,S.testMode]);if(next===sig)return;
+ if($('log').contains(document.activeElement))return; // typing in a draft: do not rebuild under the cursor
+ const L=$('log'),atBottom=L.scrollHeight-L.scrollTop-L.clientHeight<80,grew=c.length>seen;sig=next;seen=c.length;
+ L.innerHTML=c.map((m,i)=>`<div class="m ${m.role}"><div class="b"><div class="t">${esc(m.text)}</div>${m.type=='shortlist'?shortlist(m.data,i):m.type=='applications'?apps(m.data):m.type=='drafts'&&i==c.map(x=>x.type).lastIndexOf('drafts')?drafts():''}</div></div>`).join('')||'<p class="mute">Écris ce que tu cherches, par exemple : « Un stage en [métier], à [ville], dès [mois] ».</p>';
+
+ if(atBottom||grew)L.scrollTop=L.scrollHeight}
 async function loadPreflight(){
   try{
     const pf=await (await fetch('/api/preflight')).json();
@@ -84,7 +86,7 @@ async function loadPreflight(){
 async function load(){S=await (await fetch('/api/state')).json();$('who').textContent=`Agent stage · ${S.profile.name}`;
  $('mode').textContent=(S.dryRun?'dry-run':'ENVOI RÉEL')+(S.testMode?' · identité de test':'');$('mode').className='pill '+(S.dryRun?'ok':'bad');
  $('cost').textContent=`${S.spendEur.toFixed(3)} € / ${S.budgetEur} €`;$('typing').textContent=S.running?`L'agent travaille : ${S.running}…`:'';$('stop').style.display=S.running?'':'none';
- careerAccounts();if(document.activeElement?.tagName!=='TEXTAREA'&&document.activeElement?.tagName!=='INPUT')seen=-1;render()}
+ careerAccounts();render()}
 new EventSource('/events').onmessage=e=>{const j=$('journal');j.textContent+=JSON.parse(e.data)+'\n';j.scrollTop=j.scrollHeight};
 load();loadPreflight();setInterval(load,2000);setInterval(loadPreflight,10000);
 </script></body></html>

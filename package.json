@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsx --test test/auth/*.test.ts test/scope/*.test.ts test/networking/*.test.ts test/agent/*.test.ts",
+    "test": "tsx --test test/auth/*.test.ts test/scope/*.test.ts test/networking/*.test.ts test/agent/*.test.ts test/ui/*.test.ts",
     "connect": "tsx src/connect.ts",
     "agent": "tsx src/agent.ts",
     "s1": "tsx src/fill.ts s1-jobteaser \"https://dauphine.jobteaser.com/fr/job-offers/561bfda0-f8a8-4f42-80d1-43b25f73ae08-air-liquide-stage-siege-social-debt-capital-market-dcm-rating-h-f\"",

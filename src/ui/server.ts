@@ -97,20 +97,17 @@ async function onStudent(text: string) {
   const d = r.data;
   if (d.intent === 'objective') {
     const source = /\bwelcome\s+to\s+the\s+jungle\b|\bwttj\b/i.test(text) ? 'wttj' : /\bjobteaser\b/i.test(text) ? 'jobteaser' : d.source;
-    if (d.objective) { // a new or corrected objective: compile the brief from the student's own words, show it, ask what is unclear
-      const { brief } = await compileBrief(text, p.recherche ?? p.cibles);
+    let note = '';
+    if (d.objective) { // a new or corrected objective: compile the brief from the student's own words, show it short, and search right away (a correction can follow at any time)
+      const { brief } = await compileBrief(text, p.recherche ?? { objectif: p.cibles?.objectif, exclusions: p.cibles?.exclusions }, { lieux: p.cesure?.lieux, periode: p.cesure, disponibilite: p.reponses_types?.disponibilite });
       p.recherche = brief; p.cibles = { ...p.cibles, objectif: brief.objectif };
-      say(`Voici comment je comprends ta recherche :\n${briefSummary(brief)}`);
-      if (brief.a_confirmer.length) {
-        writeFileSync(PROFILE, JSON.stringify(p, null, 2));
-        return say(`Avant de chercher, j'ai besoin de savoir :\n- ${brief.a_confirmer.join('\n- ')}\n\nRéponds-moi, ou dis « lance la recherche » si c'est bon.`);
-      }
+      note = `${briefSummary(brief)}${brief.a_confirmer[0] ? `\n(Si tu veux préciser : ${brief.a_confirmer[0]})` : ''}\n\n`;
     }
     if (d.max_age_days) p.preferences = { ...p.preferences, offres_max_jours: d.max_age_days };
     if (source) p.preferences = { ...p.preferences, job_board: source };
     writeFileSync(PROFILE, JSON.stringify(p, null, 2));
     const board = p.preferences?.job_board === 'wttj' ? 'Welcome to the Jungle' : 'JobTeaser';
-    say(`${d.reply} Je cherche sur ${board} (offres de moins de ${p.preferences?.offres_max_jours ?? 7} jours) et je trie chaque offre selon ton objectif.`);
+    say(`${note}Je cherche sur ${board} (offres de moins de ${p.preferences?.offres_max_jours ?? 7} jours) et je trie chaque offre. Corrige-moi à tout moment : « pas de trading », « ajoute le crédit »…`);
     const err = run('search and rank the offers', ['src/select.ts', '10'], { OFFERS_SOURCE: p.preferences?.job_board ?? 'jobteaser' }, afterSearch); if (err) say(`Je suis déjà occupé (${running}).`);
   } else if (d.intent === 'prepare') {
     prepare(best(Math.min(d.count || 3, 5)));
