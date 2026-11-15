@@ -28,7 +28,7 @@ const base_ = { goal: 'fill the page and go on', facts: '', dryRun: true };
 
 test('the agent works a page with a custom dropdown and hands back once the page changed', async () => {
   const page = await newPage(); let turn = 0;
-  const model: ModelFn = async (req: ModelRequest) => {
+  const model: ModelFn = async (req: ModelRequest): ReturnType<ModelFn> => {
     turn++;
     if (turn === 1) return { costUsd: 0.001, calls: [{ name: 'fill', input: { ref: refOf(req.snapshot, 'Ville'), value: 'Paris' } }, { name: 'click', input: { ref: refOf(req.snapshot, 'Choisir un pays') } }] };
     if (turn === 2) return { costUsd: 0.001, calls: [{ name: 'click', input: { ref: refOf(req.snapshot, 'France') } }] };

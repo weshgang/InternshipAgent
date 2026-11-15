@@ -81,7 +81,7 @@ const authDeps = { escalate: true, vault, email: profile.identite?.email ?? '', 
   careerSite: true,
   accountDecision: (host: string, email: string) => waitForCareerAccountDecision(host, email),
   notify: (m: string) => console.log(`[Agent] ${m}`),
-  readEmail: async (hint: string) => { const m = await readEmailCode(context, hint, usedCodes, prune); llmCalls += m.calls; costUsd += m.cost; return m; } };
+  readEmail: async (hint: string) => { const m = await readEmailCode(context, hint, usedCodes, prune, t0); llmCalls += m.calls; costUsd += m.cost; return m; } };
 const opened: Page[] = [page]; // tabs this run opened: closed when the offer does not match
 
 // External career sites (JobTeaser redirects most offers there). Brief 3.5: one account per tenant.
@@ -157,7 +157,7 @@ async function agent(reason: string): Promise<'continue' | 'break' | 'skip'> {
     facts: JSON.stringify(profile) + JSON.stringify(answers) + offerContext, dryRun: DRY_RUN, cvPath, scopeCheck: (u) => scope.check(u, page.url()), log: (m) => console.log(`  ${m}`),
     mask: (s) => maskSnapshot(prune(s), entries),
     resolveValue: (v) => v.replace('{{vault.password}}', here?.password ?? '').replace('{{email.code}}', emailCode ?? ''),
-    readCode: async (hint) => { const m = await readEmailCode(context, hint || site0(), usedCodes, prune); llmCalls += m.calls; costUsd += m.cost; if (m.code) emailCode = m.code; return !!m.code; } });
+    readCode: async (hint) => { const m = await readEmailCode(context, hint || site0(), usedCodes, prune, t0); llmCalls += m.calls; costUsd += m.cost; if (m.code) emailCode = m.code; return !!m.code; } });
   agentStats.takeovers++; agentStats.turns += r.turns; agentStats.actions += r.actions; agentStats.cost_usd += r.costUsd; costUsd += r.costUsd; llmCalls += r.turns;
   console.log(`  [agent] ${r.outcome} after ${r.actions} actions, ${r.costUsd.toFixed(4)} $: ${r.summary}`);
   if (r.outcome === 'page_done') { lastState = null; stuck = 0; return 'continue'; }
@@ -222,7 +222,7 @@ for (let n = 1; n <= MAX_PAGES; n++) {
 
   const nx = plan.next;
   if (nx.action === 'need_email_code') { // read the code in Gmail, then plan the SAME page again (it will fill a `code` field)
-    const m = await readEmailCode(context, nx.reason ?? site.host, usedCodes, prune);
+    const m = await readEmailCode(context, nx.reason ?? site.host, usedCodes, prune, t0);
     llmCalls += m.calls; costUsd += m.cost;
     if (m.error) { status = 'failed'; summary = m.error; break; }
     await page.bringToFront();

@@ -24,7 +24,10 @@
     "select": "tsx src/select.ts",
     "eval:fill": "tsx src/evalFill.ts",
     "eval:drafts": "tsx src/evalDrafts.ts",
-    "brief": "tsx src/brief.ts"
+    "brief": "tsx src/brief.ts",
+    "typecheck": "tsc -p .",
+    "check": "tsc -p . && npm test",
+    "check:email": "tsx scripts/check-email-reader.ts"
   },
   "keywords": [],
   "author": "",
