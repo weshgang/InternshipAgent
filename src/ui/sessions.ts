@@ -23,7 +23,7 @@ function writeSearch(p: Paths, s: Search) {
   pr.cibles = { ...pr.cibles, objectif: s.objectif ?? '' };
   writeJson(p.profile, pr);
 }
-const nameOf = (s: Search) => String((s.recherche as { objectif?: string } | undefined)?.objectif ?? s.objectif ?? '').slice(0, 60) || 'Nouvelle recherche';
+const nameOf = (s: Search) => { const r = s.recherche as { titre?: string; objectif?: string } | undefined; return String(r?.titre || r?.objectif || s.objectif || '').slice(0, 60) || 'Nouvelle recherche'; }; // titre = short label; older briefs only have the sentence
 
 /** Working files -> <dir>/<id>/ */
 function archive(p: Paths, id: string) {

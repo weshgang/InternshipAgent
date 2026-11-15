@@ -1,104 +1,157 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agent stage</title>
 <style>
-:root{--bg:#f5f4f0;--card:#fff;--ink:#17181c;--mute:#6c707c;--line:#e2e0da;--acc:#1f4ed8;--me:#1f4ed8;--ok:#0f7b4b;--warn:#b45309;--bad:#b42318}
-@media(prefers-color-scheme:dark){:root{--bg:#111215;--card:#1a1c21;--ink:#ecebe8;--mute:#9b9ea8;--line:#2b2e35;--acc:#7da2ff;--me:#3557c9;--ok:#4ac08a;--warn:#f0a35a;--bad:#ff8a7a}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;display:flex;flex-direction:column;height:100vh}
-header{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);flex-wrap:wrap}
-#preflight-bar{display:flex;gap:8px;font-size:12px;padding:6px 16px;background:var(--card);border-bottom:1px solid var(--line);align-items:center;flex-wrap:wrap}
-h1{font-size:15px;margin:0}.pill{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}.ok{color:var(--ok);border-color:currentColor}.warn{color:var(--warn);border-color:currentColor}.bad{color:var(--bad);border-color:currentColor}
-#log{flex:1;overflow:auto;padding:16px;max-width:860px;width:100%;margin:0 auto}
-.m{margin:0 0 12px;display:flex}.m.student{justify-content:flex-end}.b{max-width:92%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px}
-.student .b{background:var(--me);color:#fff;border-color:var(--me)}.t{white-space:pre-wrap}
-.row{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.grow{flex:1;min-width:0}.mute{color:var(--mute);font-size:13px}
-a{color:var(--acc)}button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}button.p{background:var(--acc);border-color:var(--acc);color:#fff}button:disabled{opacity:.45;cursor:not-allowed}
-button.tiny{font-size:11px;padding:2px 6px;border-radius:6px}
-input[type=text],textarea{font:inherit;width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 9px}textarea{min-height:120px}
-img.shot{width:150px;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}
-footer{border-top:1px solid var(--line);background:var(--card);padding:10px 16px}footer .in{max-width:860px;margin:0 auto;display:flex;gap:8px}footer textarea{min-height:44px;height:44px;resize:none}
-.chips{max-width:860px;margin:0 auto 8px;display:flex;gap:6px;flex-wrap:wrap}.chips button{font-size:13px;padding:3px 9px;border-radius:99px}
-details{max-width:860px;margin:6px auto 0}pre{white-space:pre-wrap;font-size:12px;max-height:200px;overflow:auto;background:#0d0f12;color:#d7dae0;padding:8px;border-radius:8px}
-#sessbox{position:relative}#sessbox summary{cursor:pointer;font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:99px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;list-style:none}
-#sesslist{position:absolute;right:0;top:34px;z-index:5;width:min(380px,92vw);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.18)}#sesslist .acts{display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--line)}
-.typing{color:var(--mute);font-size:13px;padding:0 16px 8px;max-width:860px;margin:0 auto;width:100%}
+:root{--bg:#FAFAF9;--card:#fff;--ink:#111;--mute:#6B6B68;--line:#E8E8E5;--line2:#E1E1DD;--bubble:#F1F1EF;--pill:#111;--pillink:#fff;--on:#EFEFEC;--teal:#52B8A2;--coral:#F07C3E;--ok:#2A8573;--warn:#B45309;--bad:#C2410C}
+@media(prefers-color-scheme:dark){:root{--bg:#121212;--card:#1B1B1A;--ink:#F2F2F0;--mute:#A3A39E;--line:#2B2B29;--line2:#363633;--bubble:#242422;--pill:#F2F2F0;--pillink:#111;--on:#262624;--ok:#6FD3BD;--warn:#F0A35A;--bad:#FF8A5C}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;height:100vh}
+button,.btn{font:inherit;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:99px;padding:9px 18px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block}
+button.solid,.solid{background:var(--pill);color:var(--pillink);border-color:var(--pill)}button:disabled{opacity:.4;cursor:not-allowed}button.tiny{font-size:12px;padding:3px 10px}
+a{color:inherit}.mute{color:var(--mute);font-size:13px}.grow{flex:1;min-width:0}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;border:1px solid var(--line2);color:var(--mute);white-space:nowrap}.pill.ok,.pill.warn,.pill.bad{border-color:currentColor}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+/* sidebar */
+#side{width:clamp(280px,26vw,360px);flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid var(--line);padding:20px 16px 14px;overflow:auto}
+.top{display:flex;justify-content:space-between;align-items:center;padding:0 6px 14px}.brand{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.round{width:38px;height:38px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1}
+.avs{display:flex;flex-wrap:wrap;gap:4px}
+.av{position:relative;width:96px;padding:12px 4px 10px;border-radius:18px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}.av.on{background:var(--on)}.av:hover:not(.on){background:var(--on)}
+.blob{--s:64px;width:var(--s);height:var(--s);display:inline-flex;align-items:center;justify-content:center;gap:calc(var(--s)*.14);flex-shrink:0}.blob i{width:calc(var(--s)*.13);height:calc(var(--s)*.27);border-radius:99px;background:#fff;display:block}
+.lbl{font-size:13px;font-weight:500;line-height:16px;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:100%;word-break:break-word}
+.av .x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;padding:0;display:none;align-items:center;justify-content:center;font-size:14px;line-height:1;color:var(--mute)}.av:not(.on):hover .x,.av:focus-within .x{display:flex}
+.cap{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);padding:22px 6px 8px}
+.it{display:flex;gap:12px;align-items:center;padding:9px 6px;border-radius:14px}.dot{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}.dot.ask{background:var(--coral)}
+.it b{display:block;font-size:15px;line-height:19px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.it .s{display:block;font-size:13px;color:var(--mute);line-height:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#preflight-bar{display:flex;flex-wrap:wrap;gap:6px;padding:12px 6px}#preflight-bar .pill::before{content:"●";margin-right:5px}#preflight-bar a{margin-left:6px}
+.me{display:flex;align-items:center;gap:10px;padding:12px 6px 0;border-top:1px solid var(--line)}.ini{width:36px;height:36px;border-radius:50%;background:var(--on);color:var(--mute);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.me2{display:flex;justify-content:space-between;align-items:center;padding:8px 6px 0}
+/* main */
+main{flex:1;min-width:0;display:flex;flex-direction:column;height:100vh}
+header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px 24px 8px}
+.curpill{display:flex;align-items:center;gap:10px;padding:7px 16px 7px 8px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:16px;max-width:420px;min-height:44px}.curpill b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hr{justify-self:end;display:flex;gap:8px;align-items:center}
+#manage{position:relative}#manage summary{list-style:none;cursor:pointer;padding:9px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:500}#manage summary::-webkit-details-marker{display:none}
+.menu{position:absolute;right:0;top:46px;z-index:10;width:270px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:6px;box-shadow:0 12px 32px rgba(0,0,0,.14);display:flex;flex-direction:column}
+.menu button{border:0;background:transparent;text-align:left;border-radius:12px;padding:11px 14px;font-size:15px}.menu button:hover{background:var(--on)}.menu .danger{color:var(--bad)}.menu hr{border:0;border-top:1px solid var(--line);margin:4px 8px;width:calc(100% - 16px)}
+#log{flex:1;overflow:auto;padding:16px 24px;width:100%;max-width:820px;margin:0 auto}
+.m{margin:0 0 14px;display:flex}.m.student{justify-content:flex-end}
+.b{max-width:80%;padding:13px 20px;border-radius:24px;background:var(--bubble)}.student .b{background:var(--pill);color:var(--pillink);border-radius:26px;padding:11px 22px}.t{white-space:pre-wrap}
+.stack{display:flex;flex-direction:column;gap:10px;width:100%;max-width:84%;align-items:flex-start;min-width:0}.stack .b{max-width:100%}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 22px;display:flex;flex-direction:column;gap:12px;width:100%;max-width:640px}
+.k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.ttl{font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:22px}.btns{display:flex;gap:10px;flex-wrap:wrap}
+details.card>summary{cursor:pointer;color:var(--mute);font-size:14px}.row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}details.card .row:first-of-type{margin-top:10px}
+img.shot{width:150px;border:1px solid var(--line);border-radius:10px;cursor:zoom-in}
+input[type=text],textarea.d{font:inherit;width:100%;border:1px solid var(--line2);background:var(--bg);color:var(--ink);border-radius:12px;padding:8px 12px}textarea.d{min-height:120px}
+#career-accounts{width:100%;max-width:820px;margin:0 auto;padding:4px 24px 0}#career-accounts .card{border-color:var(--coral)}
+#dock{width:100%;max-width:820px;margin:0 auto;padding:6px 24px 16px}.typing{color:var(--mute);font-size:13px;padding:0 6px 8px;min-height:22px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:10px}.chips button{font-size:14px;padding:7px 14px}
+.comp{display:flex;align-items:center;gap:12px;padding:8px 8px 8px 22px;border-radius:99px;background:var(--card);border:1px solid var(--line2)}
+.comp textarea{flex:1;border:0;outline:0;background:transparent;font:inherit;color:var(--ink);resize:none;min-height:26px;max-height:140px;field-sizing:content;padding:8px 0}
+.send{width:42px;height:42px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.jr{margin-top:8px}.jr summary{cursor:pointer;color:var(--mute);font-size:13px}pre{white-space:pre-wrap;font-size:12px;max-height:200px;overflow:auto;background:#0d0f12;color:#d7dae0;padding:8px;border-radius:12px}
 </style></head><body>
-<header><h1 id="who">Agent stage</h1><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><details id="sessbox"><summary id="sesssum">Sessions</summary><div id="sesslist"></div></details><button id="stop" style="display:none" onclick="post('/api/stop')">Arrêter</button><span class="pill" id="mode"></span><span class="pill" id="cost"></span></div></header>
-<div id="preflight-bar">
-  <span class="mute" style="font-weight:600">Sondes pre-flight :</span>
-  <span id="pf-chrome" class="pill">Chrome: test...</span>
-  <span id="pf-jt" class="pill">JobTeaser: test...</span>
-  <span id="pf-gmail" class="pill">Gmail: test...</span>
-  <span id="pf-li" class="pill">LinkedIn: test...</span>
-</div>
-<div id="career-accounts" style="max-width:860px;width:100%;margin:8px auto 0"></div>
-<div id="log"></div><div class="typing" id="typing"></div>
-<footer><div class="chips" id="chips"></div><div class="in"><textarea id="msg" placeholder="Dis-moi quel stage tu cherches…"></textarea><button class="p" onclick="send()">Envoyer</button></div>
-<details><summary class="mute">Journal de l'agent</summary><pre id="journal"></pre></details></footer>
+<aside id="side">
+  <div class="top"><span class="brand">Agent stage</span><button class="round" title="Nouvelle recherche" aria-label="Nouvelle recherche" onclick="sess('new')">+</button></div>
+  <div class="avs" id="sessions"></div>
+  <div class="cap">À valider</div>
+  <div id="todo"></div>
+  <div class="grow"></div>
+  <div id="preflight-bar">
+    <span id="pf-chrome" class="pill">Chrome</span><span id="pf-jt" class="pill">JobTeaser</span><span id="pf-gmail" class="pill">Gmail</span><span id="pf-li" class="pill">LinkedIn</span>
+  </div>
+  <div class="me"><span class="ini" id="ini">?</span><span class="grow" id="who" style="font-weight:500">Agent stage</span><span class="mute" id="cost"></span></div>
+  <div class="me2"><span class="pill" id="mode"></span></div>
+</aside>
+<main>
+  <header>
+    <span></span>
+    <div class="curpill" id="cur"></div>
+    <div class="hr">
+      <button id="stop" style="display:none" onclick="post('/api/stop')">Arrêter</button>
+      <details id="manage"><summary>Gérer ▾</summary><div class="menu">
+        <button onclick="sess('new')">Nouvelle recherche</button>
+        <button onclick="clearSess()">Vider cette recherche</button>
+        <hr>
+        <button class="danger" id="delcur" onclick="delSess(S.sessions&&S.sessions.active)">Supprimer cette recherche</button>
+        <button class="danger" id="delothers" onclick="delOthers()">Supprimer les anciennes</button>
+      </div></details>
+    </div>
+  </header>
+  <div id="career-accounts"></div>
+  <div id="log"></div>
+  <div id="dock">
+    <div class="typing" id="typing"></div>
+    <div class="chips" id="chips"></div>
+    <div class="comp"><textarea id="msg" rows="1" placeholder="Dis-moi quel stage tu cherches…"></textarea><button class="send solid" aria-label="Envoyer" onclick="send()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button></div>
+    <details class="jr"><summary>Journal de l'agent</summary><pre id="journal"></pre></details>
+  </div>
+</main>
 <script>
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));let S={},seen=-1;
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'content-type':'application/json','x-demo':'1'},body:JSON.stringify(b||{})}).then(r=>r.json()).then(j=>{if(j.error)alert(j.error);setTimeout(load,300);return j});
-const CHIPS=[
-  'Prépare les 5 meilleures',
-  'Où en es-tu ?',
-  'Accepte aussi les offres qui commencent plus tôt'
-];
-$('chips').innerHTML=CHIPS.map(c=>`<button onclick="$('msg').value=this.textContent">${esc(c)}</button>`).join('');
+const CHIPS=['Prépare les 5 meilleures','Où en es-tu ?','Accepte aussi les offres qui commencent plus tôt'];
+$('chips').innerHTML=CHIPS.map(c=>`<button onclick="$('msg').value=this.textContent;$('msg').focus()">${esc(c)}</button>`).join('');
+// each search gets a colour and a shape from its id, so it keeps the same face
+const PAL=['#52B8A2','#5A5CE6','#F07C3E','#8B5CF0','#3B82F6','#5DBE7E'],hash=id=>[...String(id)].reduce((a,c)=>a+c.charCodeAt(0),0);
+const blob=(id,px)=>`<span class="blob" style="--s:${px}px;background:${PAL[hash(id)%PAL.length]};border-radius:${hash(id)%2?'38%':'50%'}"><i></i><i></i></span>`;
+const ini=t=>String(t||'').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?';
+// sessions: rebuilt only when they changed, so nothing closes or moves under the cursor
 let ssig='';
-function sessionBar(){const x=S.sessions;if(!x)return;const sg=JSON.stringify(x);if(sg===ssig)return;ssig=sg; // rebuilt only when it changed: an open panel must not close every 2 s
- const cur=x.sessions.find(s=>s.id===x.active),day=s=>new Date(s.updated_at).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
- $('sesssum').textContent='Session : '+(cur?cur.name:'');
- $('sesslist').innerHTML=x.sessions.map(s=>`<div class="row"><div class="grow"><b>${esc(s.name)}</b>${s.id===x.active?' <span class="pill ok">ouverte</span>':''}<div class="mute">${esc(day(s))}</div></div>${s.id===x.active?'':`<button class="tiny" onclick="sess('switch','${esc(s.id)}')">Ouvrir</button>`}<button class="tiny" onclick="delSess('${esc(s.id)}')">Supprimer</button></div>`).join('')
- +`<div class="acts"><button class="tiny p" onclick="sess('new')">+ Nouvelle recherche</button><button class="tiny" onclick="clearSess()">Vider cette session</button>${x.sessions.length>1?`<button class="tiny" onclick="delOthers()">Supprimer les anciennes</button>`:''}</div>`}
-async function sess(op,id){const j=await post('/api/session/'+op,id?{id}:{});if(!j.error)$('sessbox').open=false;sig='';seen=-1;ssig='';load()}
-function delSess(id){const s=S.sessions.sessions.find(x=>x.id===id);if(s&&confirm(`Supprimer définitivement la session « ${s.name} » (chat, offres triées, fiche de recherche) ?`))sess('delete',id)}
-function clearSess(){if(confirm('Vider cette session ? Le chat, les offres triées et la fiche de recherche sont effacés. Ton profil, ton CV et tes mots de passe ne sont pas touchés.'))sess('clear')}
-function delOthers(){const n=S.sessions.sessions.length-1;if(confirm(`Supprimer définitivement les ${n} autre(s) session(s) ? Seule la session ouverte est gardée.`))sess('delete-others')}
+function sessionBar(){const x=S.sessions;if(!x)return;const sg=JSON.stringify(x);if(sg===ssig)return;ssig=sg;
+ const cur=x.sessions.find(s=>s.id===x.active);
+ $('sessions').innerHTML=x.sessions.map(s=>`<div class="av${s.id===x.active?' on':''}" role="button" tabindex="0" data-id="${esc(s.id)}" onclick="pick('${esc(s.id)}')" onkeydown="if(event.key==='Enter')pick('${esc(s.id)}')">${blob(s.id,64)}<span class="lbl">${esc(s.name)}</span><button class="x" title="Supprimer cette recherche" aria-label="Supprimer ${esc(s.name)}" onclick="event.stopPropagation();delSess('${esc(s.id)}')">×</button></div>`).join('');
+ $('cur').innerHTML=cur?`${blob(cur.id,28)}<b>${esc(cur.name)}</b>`:'';
+ $('delothers').style.display=x.sessions.length>1?'':'none'}
+const pick=id=>{if(S.sessions&&id!==S.sessions.active)sess('switch',id)};
+async function sess(op,id){const j=await post('/api/session/'+op,id?{id}:{});if(!j.error)$('manage').open=false;sig='';seen=-1;ssig='';tsig='';load()}
+function delSess(id){const s=S.sessions&&S.sessions.sessions.find(x=>x.id===id);if(s&&confirm(`Supprimer définitivement la recherche « ${s.name} » (chat, offres triées, fiche de recherche) ?`))sess('delete',id)}
+function clearSess(){if(confirm('Vider cette recherche ? Le chat, les offres triées et la fiche de recherche sont effacés. Ton profil, ton CV et tes mots de passe ne sont pas touchés.'))sess('clear')}
+function delOthers(){const n=S.sessions.sessions.length-1;if(confirm(`Supprimer définitivement les ${n} autre(s) recherche(s) ? Seule la recherche ouverte est gardée.`))sess('delete-others')}
+document.addEventListener('click',e=>{const m=$('manage');if(m.open&&!m.contains(e.target))m.open=false});
+// "À valider": what waits for the student, built from the state
+let tsig='';
+function todoBar(){const out=[];
+ (S.careerAccounts||[]).filter(x=>!x.decision).forEach(x=>out.push({ask:1,g:'!',t:x.host,s:'Compte requis : ton accord'}));
+ const last=[...(S.chat||[])].reverse().find(m=>m.type=='applications');
+ (last?last.data:[]).forEach(r=>out.push({ask:r.status!='ready_to_submit',t:r.offer,s:r.status=='ready_to_submit'?'Prête : arrêtée avant l’envoi':r.summary}));
+ const early=(S.ranked||[]).filter(r=>r.early).length;if(early)out.push({ask:1,g:'!',t:`${early} offre(s) plus tôt`,s:'Tu peux démarrer plus tôt ?'});
+ const dr=(S.queue||[]).filter(x=>x.status=='pending').length;if(dr)out.push({ask:1,g:'!',t:`${dr} e-mail(s)`,s:'À valider avant envoi'});
+ const sg=JSON.stringify(out);if(sg===tsig)return;tsig=sg;
+ $('todo').innerHTML=out.map(i=>`<div class="it"><span class="dot${i.ask?' ask':''}">${esc(i.g||ini(i.t))}</span><div class="grow"><b>${esc(i.t)}</b><span class="s">${esc(i.s)}</span></div></div>`).join('')||'<div class="mute" style="padding:4px 6px">Rien à valider pour l’instant.</div>'}
 function send(){const t=$('msg').value.trim();if(!t)return;$('msg').value='';post('/api/chat',{text:t})}
 $('msg').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
-const vpill=(v,early)=>`<span class="pill ${v=='oui'?'ok':v=='non'?'bad':'warn'}">${early?'Arbitrage janv.':esc(v)}</span>`;
-function shortlist(rows,i){
-  return `<details><summary class="mute">Voir les ${rows.length} offres et les raisons</summary><div>${rows.map(r=>{
-    return `<div class="row">${vpill(r.verdict, r.early)}<div class="grow"><a href="${esc(r.url)}" target="_blank">${esc(r.title)}</a> <span class="mute">${esc(r.company||'')}</span>
-    <div class="mute">${esc(r.reason)}</div></div>
-    ${r.early?`<button class="tiny p" onclick="post('/api/chat',{text:'Accepte janvier pour cette offre'})">Valider janvier</button>`:''}</div>`
-  }).join('')}</div></details>`;
-}
-function apps(rows){return rows.map(r=>`<div class="row"><span class="pill ${r.status=='ready_to_submit'?'ok':'warn'}">${r.status=='ready_to_submit'?'prête':esc(r.status)}</span><div class="grow"><b>${esc(r.offer)}</b><div class="mute">${esc(r.summary)}</div>
-${r.shot?`<a href="/${esc(r.shot)}" target="_blank"><img class="shot" src="/${esc(r.shot)}" alt="Dernière page avant envoi"></a>`:''}</div>
-<button ${S.testMode||r.status!='ready_to_submit'?'disabled':''} title="${S.testMode?'Mode test : jamais envoyé avec l’identité fictive':'Envoi réel'}">Envoyer</button></div>`).join('')}
+const ST={ready_to_submit:'Candidature prête',needs_human:'À compléter',failed:'Échec',not_matching:'Écartée',out_of_scope:'Hors liste blanche',partial:'Incomplète',skipped:'Ignorée',success:'Envoyée'};
+const vpill=(v,early)=>`<span class="pill ${v=='oui'?'ok':v=='non'?'bad':'warn'}">${early?'Plus tôt':esc(v)}</span>`;
+function shortlist(rows){
+ return `<details class="card"><summary>Voir les ${rows.length} offres et les raisons</summary>${rows.map(r=>`<div class="row">${vpill(r.verdict,r.early)}<div class="grow"><a href="${esc(r.url)}" target="_blank">${esc(r.title)}</a> <span class="mute">${esc(r.company||'')}</span><div class="mute">${esc(r.reason)}</div></div>${r.early?`<button class="tiny solid" onclick="post('/api/chat',{text:'Accepte de démarrer plus tôt'})">Démarrer plus tôt</button>`:''}</div>`).join('')}</details>`}
+function apps(rows){return rows.map(r=>{const ready=r.status=='ready_to_submit';return `<div class="card"><div class="k ${ready?'ok':'warn'}">${esc(ST[r.status]||r.status)}</div><div class="ttl">${esc(r.offer)}</div><div class="mute">${esc(r.summary)}</div>
+${r.shot?`<a href="/${esc(r.shot)}" target="_blank"><img class="shot" src="/${esc(r.shot)}" alt="Dernière page avant envoi"></a>`:''}
+<div class="btns"><button class="solid" ${S.testMode||!ready?'disabled':''} title="${S.testMode?'Mode test : jamais envoyé avec l’identité fictive':'Envoi réel'}">Envoyer</button>${r.shot?`<a class="btn" href="/${esc(r.shot)}" target="_blank">Revoir d’abord</a>`:''}</div></div>`}).join('')}
 function careerAccounts(){
  const pending=(S.careerAccounts||[]).filter(x=>!x.decision);
- $('career-accounts').innerHTML=pending.length?`<div class="b" style="border-color:var(--warn)"><b>Compte requis pour continuer</b>${pending.map(x=>`<div class="row"><div class="grow">Le site carrière <b>${esc(x.host)}</b> demande un compte pour ${esc(x.email)}.</div><button onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'existing'})">Compte existant</button><button class="p" onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'create'})">Créer automatiquement</button></div>`).join('')}</div>`:'';
+ $('career-accounts').innerHTML=pending.length?`<div class="card"><div class="k warn">Compte requis pour continuer</div>${pending.map(x=>`<div class="row"><div class="grow">Le site carrière <b>${esc(x.host)}</b> demande un compte pour ${esc(x.email)}.</div><button onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'existing'})">Compte existant</button><button class="solid" onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'create'})">Créer automatiquement</button></div>`).join('')}</div>`:'';
 }
-function drafts(){return (S.queue||[]).map(x=>`<div class="row"><div class="grow"><b>${esc(x.contact.firstName)} ${esc(x.contact.lastName)}</b> <span class="mute">${esc(x.contact.title)} · ${esc(x.contact.company)} · ${esc(x.email)} (${x.emailStatus=='verified'?'vérifié':'deviné'})${S.testMode?' → envoi vers l’adresse de test':''}</span> <span class="pill ${x.status=='sent'?'ok':x.status=='rejected'?'bad':''}">${esc(x.status)}</span>
-<input type="text" id="s_${x.id}" value="${esc(x.subject)}" style="margin:6px 0"><textarea id="b_${x.id}">${esc(x.body)}</textarea>
-<div style="display:flex;gap:6px;margin-top:6px"><button onclick="post('/api/network/${x.id}/edit',{subject:$('s_${x.id}').value,body:$('b_${x.id}').value})">Modifier</button><button onclick="post('/api/network/${x.id}/reject')">Rejeter</button><button class="p" onclick="post('/api/network/${x.id}/approve')">Valider</button>
-<button ${x.status!='approved'?'disabled':''} onclick="if(confirm('Envoyer maintenant${S.testMode?' (vers l’adresse de test)':''} ?'))post('/api/network/${x.id}/send',{real:true,confirm:'ENVOYER',schedule:false})">Envoyer</button></div></div></div>`).join('')}
+function drafts(){return (S.queue||[]).map(x=>`<div class="card"><div><b>${esc(x.contact.firstName)} ${esc(x.contact.lastName)}</b> <span class="mute">${esc(x.contact.title)} · ${esc(x.contact.company)} · ${esc(x.email)} (${x.emailStatus=='verified'?'vérifié':'deviné'})${S.testMode?' → envoi vers l’adresse de test':''}</span> <span class="pill ${x.status=='sent'?'ok':x.status=='rejected'?'bad':''}">${esc(x.status)}</span></div>
+<input type="text" id="s_${x.id}" value="${esc(x.subject)}"><textarea class="d" id="b_${x.id}">${esc(x.body)}</textarea>
+<div class="btns"><button onclick="post('/api/network/${x.id}/edit',{subject:$('s_${x.id}').value,body:$('b_${x.id}').value})">Modifier</button><button onclick="post('/api/network/${x.id}/reject')">Rejeter</button><button class="solid" onclick="post('/api/network/${x.id}/approve')">Valider</button>
+<button ${x.status!='approved'?'disabled':''} onclick="if(confirm('Envoyer maintenant${S.testMode?' (vers l’adresse de test)':''} ?'))post('/api/network/${x.id}/send',{real:true,confirm:'ENVOYER',schedule:false})">Envoyer</button></div></div>`).join('')}
 let sig='';
 function render(){const c=S.chat||[];const next=JSON.stringify([c,S.queue,S.testMode]);if(next===sig)return;
  if($('log').contains(document.activeElement))return; // typing in a draft: do not rebuild under the cursor
  const L=$('log'),atBottom=L.scrollHeight-L.scrollTop-L.clientHeight<80,grew=c.length>seen;sig=next;seen=c.length;
- L.innerHTML=c.map((m,i)=>`<div class="m ${m.role}"><div class="b"><div class="t">${esc(m.text)}</div>${m.type=='shortlist'?shortlist(m.data,i):m.type=='applications'?apps(m.data):m.type=='drafts'&&i==c.map(x=>x.type).lastIndexOf('drafts')?drafts():''}</div></div>`).join('')||'<p class="mute">Écris ce que tu cherches, par exemple : « Un stage en [métier], à [ville], dès [mois] ».</p>';
-
+ L.innerHTML=c.map((m,i)=>{const extra=m.type=='shortlist'?shortlist(m.data):m.type=='applications'?apps(m.data):m.type=='drafts'&&i==c.map(x=>x.type).lastIndexOf('drafts')?drafts():'';
+  return m.role=='student'?`<div class="m student"><div class="b"><div class="t">${esc(m.text)}</div></div></div>`:`<div class="m agent"><div class="stack"><div class="b"><div class="t">${esc(m.text)}</div></div>${extra}</div></div>`}).join('')||'<p class="mute">Écris ce que tu cherches, par exemple : « Un stage en [métier], à [ville], dès [mois] ».</p>';
  if(atBottom||grew)L.scrollTop=L.scrollHeight}
 async function loadPreflight(){
-  try{
-    const pf=await (await fetch('/api/preflight')).json();
-    const setB=(id,s)=>{
-      const el=$(id);if(!el)return;
-      el.className='pill '+(s.ok?'ok':'bad');
-      if(s.ok){el.textContent=`${s.name}: 🟢 ${s.detail||'Connecté'}`;}
-      else{el.innerHTML=`${s.name}: 🔴 ${esc(s.detail)} ${s.actionUrl?`<a href="#" onclick="post('/api/open-tab',{url:'${s.actionUrl}'});return false;" style="text-decoration:underline;margin-left:4px">Ouvrir</a>`:''}`;}
-    };
-    setB('pf-chrome',pf.browser);
-    setB('pf-jt',pf.jobteaser);
-    setB('pf-gmail',pf.gmail);
-    setB('pf-li',pf.linkedin);
-  }catch(e){}
+ try{
+  const pf=await (await fetch('/api/preflight')).json();
+  const setB=(id,s)=>{const el=$(id);if(!el)return;el.className='pill '+(s.ok?'ok':'bad');
+   el.innerHTML=s.ok?esc(s.name):`${esc(s.name)} : ${esc(s.detail)}${s.actionUrl?` <a href="#" onclick="post('/api/open-tab',{url:'${s.actionUrl}'});return false;">Ouvrir</a>`:''}`;el.title=s.ok?(s.detail||'Connecté'):''};
+  setB('pf-chrome',pf.browser);setB('pf-jt',pf.jobteaser);setB('pf-gmail',pf.gmail);setB('pf-li',pf.linkedin);
+ }catch(e){}
 }
-async function load(){S=await (await fetch('/api/state')).json();$('who').textContent=`Agent stage · ${S.profile.name}`;
+async function load(){S=await (await fetch('/api/state')).json();const nm=(S.profile.name||'').trim();$('who').textContent=nm||'Agent stage';$('ini').textContent=ini(nm);
  $('mode').textContent=(S.dryRun?'dry-run':'ENVOI RÉEL')+(S.testMode?' · identité de test':'');$('mode').className='pill '+(S.dryRun?'ok':'bad');
- $('cost').textContent=`${S.spendEur.toFixed(3)} € / ${S.budgetEur} €`;$('typing').textContent=S.running?`L'agent travaille : ${S.running}…`:'';$('stop').style.display=S.running?'':'none';
- careerAccounts();sessionBar();render()}
+ $('cost').textContent=`${S.spendEur.toFixed(2)} € / ${S.budgetEur} €`;$('typing').textContent=S.running?`L'agent travaille : ${S.running}…`:'';$('stop').style.display=S.running?'':'none';
+ careerAccounts();sessionBar();todoBar();render()}
 new EventSource('/events').onmessage=e=>{const j=$('journal');j.textContent+=JSON.parse(e.data)+'\n';j.scrollTop=j.scrollHeight};
 load();loadPreflight();setInterval(load,2000);setInterval(loadPreflight,10000);
 </script></body></html>

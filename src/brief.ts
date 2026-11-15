@@ -6,6 +6,7 @@ import { complete } from './llm/index.js';
 // The search brief: the student's objective, interpreted ONCE (Sonnet), shown to the student, stored in profile.recherche.
 // Every prompt (judge, form filler, letter) stays generic and reads this brief as data: the user-specific knowledge lives here, not in the prompts.
 export type Brief = {
+  titre: string; // 2-4 words, the name of the search in the UI (avatar label)
   objectif: string;
   contrats: string[]; // stage | alternance | cdi | cdd | vie | freelance
   lieux: string[];
@@ -19,16 +20,17 @@ export type Brief = {
 const str = { type: 'string' };
 const list = (props: Record<string, object>) => ({ type: 'array', items: { type: 'object', properties: props, required: Object.keys(props) } });
 const schema = { type: 'object', properties: {
-  objectif: str, contrats: { type: 'array', items: { type: 'string', enum: ['stage', 'alternance', 'cdi', 'cdd', 'vie', 'freelance'] } }, lieux: { type: 'array', items: str },
+  titre: str, objectif: str, contrats: { type: 'array', items: { type: 'string', enum: ['stage', 'alternance', 'cdi', 'cdd', 'vie', 'freelance'] } }, lieux: { type: 'array', items: str },
   coeur: list({ role: str, signes: str }), adjacent: list({ role: str, pourquoi: str }), exclu: list({ fonction: str, signes: str }),
   titres_trompeurs: list({ titre: str, comment_trancher: str }), mots_exclus_titre: { type: 'array', items: str }, a_confirmer: { type: 'array', items: str },
-}, required: ['objectif', 'contrats', 'lieux', 'coeur', 'adjacent', 'exclu', 'titres_trompeurs', 'mots_exclus_titre', 'a_confirmer'] };
+}, required: ['titre', 'objectif', 'contrats', 'lieux', 'coeur', 'adjacent', 'exclu', 'titres_trompeurs', 'mots_exclus_titre', 'a_confirmer'] };
 
 const FIXED = `<role>
 You turn a student's job-search objective into a search brief. The brief is read by a model that sorts job offers into "oui" (apply), "peut-être" (the student decides) and "non", and by a model that fills application forms. The student reads it too, so write every value in French.
 </role>
 
 <how_to_build_it>
+- titre: 2 to 4 words naming this search in French, for a label (e.g. "Sales marchés", "Marketing digital", "M&A Londres"): the field plus the specific role or place, no verb.
 - lieux: the places the student named, else those of <known_facts>.
 - objectif: the objective restated in one clear French sentence.
 - contrats: the contract types the student accepts, from what they say (a "stage de césure" is "stage"). Leave it empty only if nothing tells you.

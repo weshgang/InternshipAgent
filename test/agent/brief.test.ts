@@ -10,7 +10,7 @@ test('title exclusions come from the brief, else from the legacy targets, else n
 
 test('the chat summary stays short however long the brief is', () => {
   const n = (k: string, i: number) => `${k} ${i}`;
-  const big = { objectif: 'x', contrats: ['stage'], lieux: [], coeur: Array.from({ length: 9 }, (_, i) => ({ role: n('coeur', i), signes: '' })), adjacent: Array.from({ length: 9 }, (_, i) => ({ role: n('adj', i), pourquoi: '' })),
+  const big = { titre: 't', objectif: 'x', contrats: ['stage'], lieux: [], coeur: Array.from({ length: 9 }, (_, i) => ({ role: n('coeur', i), signes: '' })), adjacent: Array.from({ length: 9 }, (_, i) => ({ role: n('adj', i), pourquoi: '' })),
     exclu: Array.from({ length: 9 }, (_, i) => ({ fonction: n('excl', i), signes: '' })), titres_trompeurs: [], mots_exclus_titre: [], a_confirmer: [] } as Brief;
   const out = briefSummary(big);
   assert.equal(out.split('\n').length, 4); assert.ok(!out.includes('coeur 3') && out.includes('+6'));

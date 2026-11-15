@@ -57,3 +57,7 @@ test('an id from the network can never leave the sessions folder', () => {
   for (const bad of ['../x', '..', 'a/b', '', 'zzzzzzzzzzzzzzzzzzzz', 7, undefined]) { assert.throws(() => remove(p, bad)); assert.throws(() => switchTo(p, bad)); }
   assert.ok(existsSync(p.chat));
 });
+test('a session is named by the short title of its brief when it has one', () => {
+  const p = setup(); writeFileSync(p.profile, JSON.stringify({ cibles: { objectif: 'x' }, recherche: { titre: 'Sales marchés', objectif: 'Trouver un stage en finance de marché, au poste de Sales' } }));
+  assert.equal(list(p).sessions[0].name, 'Sales marchés');
+});
