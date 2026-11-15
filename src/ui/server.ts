@@ -6,6 +6,7 @@ import { loadQueue, setStatus } from '../networking/core.js';
 import { testMode } from '../networking/guard.js';
 import { complete } from '../llm/index.js';
 import { compileBrief, briefSummary } from '../brief.js';
+import * as sessions from './sessions.js';
 import { enqueue } from '../networking/run.js';
 import { readdirSync } from 'node:fs';
 import { checkPreflight, openInChrome } from '../preflight.js';
@@ -30,6 +31,8 @@ function run(label: string, args: string[], env: Record<string, string> = {}, on
 // ---- Conversation: the student talks to the agent; the agent answers with messages and validation cards (data/chat.json).
 type Msg = { role: 'student' | 'agent'; text: string; type?: 'shortlist' | 'applications' | 'drafts'; data?: unknown; at: string };
 const CHAT = 'data/chat.json';
+const SESSION_PATHS: sessions.Paths = { dir: 'data/sessions', chat: CHAT, ranked: 'data/offers-ranked.json', offers: 'offers.json', profile: PROFILE };
+let handling = false; // a chat message is being understood: it will write the brief into the open session, so the session must not change meanwhile
 const chat = (): Msg[] => readJson<Msg[]>(CHAT, []);
 function push(m: Omit<Msg, 'at'>) { mkdirSync('data', { recursive: true }); const c = chat(); c.push({ ...m, at: new Date().toISOString() }); writeFileSync(CHAT, JSON.stringify(c, null, 1)); }
 const say = (text: string, type?: Msg['type'], data?: unknown) => push({ role: 'agent', text, type, data });
@@ -124,7 +127,7 @@ async function onStudent(text: string) {
 const state = () => {
   const p = readJson<any>(PROFILE, {}); const spend = readJson<any>('runs/spend.json', { total_eur: 0 });
   return { profile: { name: `${p.identite?.prenom ?? ''} ${p.identite?.nom ?? ''}`, email: p.identite?.email, school: p.ecole?.nom, programme: p.ecole?.programme, start: p.cesure?.debut, cv: p.documents?.cv_fr, targets: p.cibles },
-    offers: readJson('offers.json', []), ranked: readJson('data/offers-ranked.json', []), chat: chat(), queue: loadQueue(), careerAccounts: careerAccountRecords(), spendEur: spend.total_eur, budgetEur: Number(process.env.LLM_BUDGET_EUR ?? 20), dryRun: process.env.DRY_RUN !== 'false', testMode: testMode(), running };
+    sessions: sessions.list(SESSION_PATHS), offers: readJson('offers.json', []), ranked: readJson('data/offers-ranked.json', []), chat: chat(), queue: loadQueue(), careerAccounts: careerAccountRecords(), spendEur: spend.total_eur, budgetEur: Number(process.env.LLM_BUDGET_EUR ?? 20), dryRun: process.env.DRY_RUN !== 'false', testMode: testMode(), running };
 };
 
 createServer(async (req, res) => {
@@ -140,7 +143,15 @@ createServer(async (req, res) => {
   if (url.pathname === '/api/cv') { mkdirSync('profiles', { recursive: true }); writeFileSync('profiles/uploaded-cv.pdf', body); const p = readJson<any>(PROFILE, {}); p.documents = { ...p.documents, cv_fr: './profiles/uploaded-cv.pdf' }; writeFileSync(PROFILE, JSON.stringify(p, null, 2)); return json(res, { ok: true }); }
   if (url.pathname === '/api/profile') { const p = readJson<any>(PROFILE, {}); if (b.start) p.cesure = { ...p.cesure, debut: b.start }; if (b.targets) p.cibles = { ...p.cibles, secteurs: String(b.targets).split(',').map((s: string) => s.trim()).filter(Boolean) }; writeFileSync(PROFILE, JSON.stringify(p, null, 2)); return json(res, { ok: true }); }
   if (url.pathname === '/api/stop') { if (!child?.pid) return json(res, { error: 'rien en cours' }); stopped = true; try { process.kill(-child.pid, 'SIGTERM'); } catch { /* already gone */ } say(`J'ai arrêté : ${running}.`); return json(res, { ok: true }); }
-  if (url.pathname === '/api/chat') { onStudent(String(b.text ?? '').slice(0, 2000)).catch((e) => say(`Erreur : ${(e as Error).message.slice(0, 200)}`)); return json(res, { ok: true }); }
+  if (url.pathname === '/api/chat') { handling = true; onStudent(String(b.text ?? '').slice(0, 2000)).catch((e) => say(`Erreur : ${(e as Error).message.slice(0, 200)}`)).finally(() => { handling = false; }); return json(res, { ok: true }); }
+  const sm = /^\/api\/session\/(new|switch|clear|delete|delete-others)$/.exec(url.pathname);
+  if (sm) {
+    if (running || handling) return json(res, { error: `Une tâche est en cours (${running || 'message en traitement'}) : attends la fin ou arrête-la avant de changer de session.` }, 409);
+    try {
+      const op = sm[1]; const P = SESSION_PATHS;
+      return json(res, { ok: true, sessions: op === 'new' ? sessions.create(P) : op === 'switch' ? sessions.switchTo(P, b.id) : op === 'clear' ? sessions.clear(P) : op === 'delete' ? sessions.remove(P, b.id) : sessions.removeOthers(P) });
+    } catch (e) { return json(res, { error: (e as Error).message }, 400); }
+  }
   if (url.pathname === '/api/career-account') {
     const host = String(b.host ?? '').trim();
     const decision = b.decision;

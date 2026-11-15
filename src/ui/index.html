@@ -17,9 +17,11 @@ img.shot{width:150px;border:1px solid var(--line);border-radius:6px;cursor:zoom-
 footer{border-top:1px solid var(--line);background:var(--card);padding:10px 16px}footer .in{max-width:860px;margin:0 auto;display:flex;gap:8px}footer textarea{min-height:44px;height:44px;resize:none}
 .chips{max-width:860px;margin:0 auto 8px;display:flex;gap:6px;flex-wrap:wrap}.chips button{font-size:13px;padding:3px 9px;border-radius:99px}
 details{max-width:860px;margin:6px auto 0}pre{white-space:pre-wrap;font-size:12px;max-height:200px;overflow:auto;background:#0d0f12;color:#d7dae0;padding:8px;border-radius:8px}
+#sessbox{position:relative}#sessbox summary{cursor:pointer;font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:99px;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;list-style:none}
+#sesslist{position:absolute;right:0;top:34px;z-index:5;width:min(380px,92vw);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.18)}#sesslist .acts{display:flex;gap:6px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--line)}
 .typing{color:var(--mute);font-size:13px;padding:0 16px 8px;max-width:860px;margin:0 auto;width:100%}
 </style></head><body>
-<header><h1 id="who">Agent stage</h1><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><button id="stop" style="display:none" onclick="post('/api/stop')">Arrêter</button><span class="pill" id="mode"></span><span class="pill" id="cost"></span></div></header>
+<header><h1 id="who">Agent stage</h1><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><details id="sessbox"><summary id="sesssum">Sessions</summary><div id="sesslist"></div></details><button id="stop" style="display:none" onclick="post('/api/stop')">Arrêter</button><span class="pill" id="mode"></span><span class="pill" id="cost"></span></div></header>
 <div id="preflight-bar">
   <span class="mute" style="font-weight:600">Sondes pre-flight :</span>
   <span id="pf-chrome" class="pill">Chrome: test...</span>
@@ -40,6 +42,16 @@ const CHIPS=[
   'Accepte aussi les offres qui commencent plus tôt'
 ];
 $('chips').innerHTML=CHIPS.map(c=>`<button onclick="$('msg').value=this.textContent">${esc(c)}</button>`).join('');
+let ssig='';
+function sessionBar(){const x=S.sessions;if(!x)return;const sg=JSON.stringify(x);if(sg===ssig)return;ssig=sg; // rebuilt only when it changed: an open panel must not close every 2 s
+ const cur=x.sessions.find(s=>s.id===x.active),day=s=>new Date(s.updated_at).toLocaleString('fr-FR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+ $('sesssum').textContent='Session : '+(cur?cur.name:'');
+ $('sesslist').innerHTML=x.sessions.map(s=>`<div class="row"><div class="grow"><b>${esc(s.name)}</b>${s.id===x.active?' <span class="pill ok">ouverte</span>':''}<div class="mute">${esc(day(s))}</div></div>${s.id===x.active?'':`<button class="tiny" onclick="sess('switch','${esc(s.id)}')">Ouvrir</button>`}<button class="tiny" onclick="delSess('${esc(s.id)}')">Supprimer</button></div>`).join('')
+ +`<div class="acts"><button class="tiny p" onclick="sess('new')">+ Nouvelle recherche</button><button class="tiny" onclick="clearSess()">Vider cette session</button>${x.sessions.length>1?`<button class="tiny" onclick="delOthers()">Supprimer les anciennes</button>`:''}</div>`}
+async function sess(op,id){const j=await post('/api/session/'+op,id?{id}:{});if(!j.error)$('sessbox').open=false;sig='';seen=-1;ssig='';load()}
+function delSess(id){const s=S.sessions.sessions.find(x=>x.id===id);if(s&&confirm(`Supprimer définitivement la session « ${s.name} » (chat, offres triées, fiche de recherche) ?`))sess('delete',id)}
+function clearSess(){if(confirm('Vider cette session ? Le chat, les offres triées et la fiche de recherche sont effacés. Ton profil, ton CV et tes mots de passe ne sont pas touchés.'))sess('clear')}
+function delOthers(){const n=S.sessions.sessions.length-1;if(confirm(`Supprimer définitivement les ${n} autre(s) session(s) ? Seule la session ouverte est gardée.`))sess('delete-others')}
 function send(){const t=$('msg').value.trim();if(!t)return;$('msg').value='';post('/api/chat',{text:t})}
 $('msg').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
 const vpill=(v,early)=>`<span class="pill ${v=='oui'?'ok':v=='non'?'bad':'warn'}">${early?'Arbitrage janv.':esc(v)}</span>`;
@@ -86,7 +98,7 @@ async function loadPreflight(){
 async function load(){S=await (await fetch('/api/state')).json();$('who').textContent=`Agent stage · ${S.profile.name}`;
  $('mode').textContent=(S.dryRun?'dry-run':'ENVOI RÉEL')+(S.testMode?' · identité de test':'');$('mode').className='pill '+(S.dryRun?'ok':'bad');
  $('cost').textContent=`${S.spendEur.toFixed(3)} € / ${S.budgetEur} €`;$('typing').textContent=S.running?`L'agent travaille : ${S.running}…`:'';$('stop').style.display=S.running?'':'none';
- careerAccounts();render()}
+ careerAccounts();sessionBar();render()}
 new EventSource('/events').onmessage=e=>{const j=$('journal');j.textContent+=JSON.parse(e.data)+'\n';j.scrollTop=j.scrollHeight};
 load();loadPreflight();setInterval(load,2000);setInterval(loadPreflight,10000);
 </script></body></html>
