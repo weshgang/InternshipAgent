@@ -1,0 +1,309 @@
+{
+ "objectif": "Stage de césure de 6 mois (première partie) à partir de mars 2027, à Paris ou Londres, en banque d’investissement : M&A, marchés de capitaux (DCM, ECM), leveraged finance, corporate finance de banque d’affaires. Pas de marketing, communication, comptabilité, audit, RH, développement informatique, back ou middle office, ni de finance durable / ESG.",
+ "offers": [
+  {
+   "id": "o01",
+   "title": "Stage - Chargé de Webmarketing F/H",
+   "company": "Galeries Lafayette",
+   "snippet": "Au sein de l'équipe digitale, vous participez à l'animation des campagnes d'emailing, au suivi du SEO et à l'analyse des performances des campagnes d'acquisition. Stage de 6 mois à Paris.",
+   "expected": "non",
+   "why": "Webmarketing : marketing explicitement exclu."
+  },
+  {
+   "id": "o02",
+   "title": "Stage - 6 mois - Expert en Finance Durable F/H",
+   "company": "Natixis",
+   "snippet": "Vous contribuez à l'élaboration de la méthodologie de classification des financements verts et au reporting ESG du portefeuille. Vous participez aux travaux sur la taxonomie européenne.",
+   "expected": "non",
+   "why": "Finance durable / ESG explicitement exclue."
+  },
+  {
+   "id": "o03",
+   "title": "Stage - 6 mois - Assistant Trader Tresorerie LT F/H",
+   "company": "Natixis",
+   "snippet": "Au sein de la table de trésorerie long terme, vous assistez les traders dans le suivi des positions de refinancement et la préparation des émissions de dette senior. Vous produisez des analyses de coût de funding.",
+   "expected": "peut-être",
+   "why": "Salle de marchés/trésorerie, adjacent aux marchés de capitaux mais pas du conseil ni de l'origination."
+  },
+  {
+   "id": "o04",
+   "title": "Stage - Siège Social - Debt Capital Market (DCM) & Rating H/F",
+   "company": "Air Liquide",
+   "snippet": "Au sein de la Direction Financements et Trésorerie, vous participez à la préparation des émissions obligataires du Groupe et au dialogue avec les agences de notation. Vous analysez les conditions de marché et les spreads.",
+   "expected": "oui",
+   "why": "DCM et rating côté émetteur, cœur de l'objectif marchés de capitaux."
+  },
+  {
+   "id": "o05",
+   "title": "Junior Project Manager en Finance Durable - Stage - H/F",
+   "company": "BNP Paribas",
+   "snippet": "Vous accompagnez le déploiement de la stratégie de finance durable de la banque : suivi des indicateurs climat, coordination avec les métiers et préparation des comités ESG.",
+   "expected": "non",
+   "why": "Finance durable / ESG explicitement exclue."
+  },
+  {
+   "id": "o06",
+   "title": "Stage – Investment Banking Growth Capital & Solutions Intern – H/F",
+   "company": "BNP Paribas",
+   "snippet": "You will support the team on origination and execution of growth equity and structured financing solutions for tech and healthcare clients. Tasks include financial modelling, valuation and pitch books.",
+   "expected": "oui",
+   "why": "Investment banking, modélisation, valorisation et exécution."
+  },
+  {
+   "id": "o07",
+   "title": "STAGE - Chargé d'études F/H",
+   "company": "Bpifrance",
+   "snippet": "Rattaché à la direction des études, vous réalisez des analyses sectorielles et des notes de synthèse sur le financement des PME et ETI. Vous appuyez les équipes d'investissement ponctuellement.",
+   "expected": "peut-être",
+   "why": "Titre vague dans une institution financière, lien avec l'investissement possible mais incertain."
+  },
+  {
+   "id": "o08",
+   "title": "Stage - 6 mois - Middle Office OST/Proxy Voting F/H",
+   "company": "Natixis",
+   "snippet": "Vous traitez les opérations sur titres, contrôlez les instructions de vote aux assemblées générales et assurez le rapprochement avec les dépositaires.",
+   "expected": "non",
+   "why": "Middle office de traitement des titres, sans lien avec les opérations de financement."
+  },
+  {
+   "id": "o09",
+   "title": "Stage - 6 mois - Structuration SECM - F/H",
+   "company": "Natixis",
+   "snippet": "Au sein de l'équipe de structuration des émissions de dette, vous participez à la conception de notes structurées et au pricing avec les équipes de ventes. Vous préparez la documentation des émissions.",
+   "expected": "peut-être",
+   "why": "Structuration d'émissions proche des marchés de capitaux, mais SECM est plutôt orienté produits dérivés/ventes ; à vérifier."
+  },
+  {
+   "id": "o10",
+   "title": "M&A Analyst Intern (Gap Year)",
+   "company": "Rothschild & Co",
+   "snippet": "Join our Paris advisory team for a 6-month internship from March 2027. You will build valuation models, prepare information memoranda and assist on live sell-side and buy-side mandates.",
+   "expected": "oui",
+   "why": "M&A advisory en banque d'affaires, durée et date compatibles."
+  },
+  {
+   "id": "o11",
+   "title": "Stage Fusions & Acquisitions - 6 mois",
+   "company": "Lazard",
+   "snippet": "Vous intégrez l'équipe Fusions-Acquisitions à Paris et participez à l'analyse financière, la valorisation et la préparation de documents de présentation pour des opérations cross-border.",
+   "expected": "oui",
+   "why": "Fusions-acquisitions en banque d'affaires."
+  },
+  {
+   "id": "o12",
+   "title": "Investment Banking Division - Summer/Gap Intern, London",
+   "company": "Goldman Sachs",
+   "snippet": "You will join an industry coverage team in London, working on M&A and financing transactions. Responsibilities include building comps, DCF models and supporting client pitches.",
+   "expected": "oui",
+   "why": "IBD à Londres, M&A et financements."
+  },
+  {
+   "id": "o13",
+   "title": "Stage ECM - Equity Capital Markets",
+   "company": "Société Générale",
+   "snippet": "Au sein de l'équipe ECM, vous participez au suivi des opérations d'introduction en bourse, d'augmentation de capital et d'obligations convertibles, ainsi qu'à la préparation des présentations clients.",
+   "expected": "oui",
+   "why": "ECM, cœur de cible."
+  },
+  {
+   "id": "o14",
+   "title": "Leveraged Finance Intern",
+   "company": "Crédit Agricole CIB",
+   "snippet": "Support the origination and execution of LBO financings for sponsors in Europe. You will analyse credit profiles, build debt capacity models and draft credit papers. Based in Paris.",
+   "expected": "oui",
+   "why": "Leveraged Finance, financement d'opérations."
+  },
+  {
+   "id": "o15",
+   "title": "Stage Debt Capital Markets - Financial Institutions",
+   "company": "Crédit Agricole CIB",
+   "snippet": "Vous participez à l'exécution d'émissions obligataires pour des institutions financières : analyse des conditions de marché, préparation des documents d'offre et suivi du book building.",
+   "expected": "oui",
+   "why": "DCM clairement décrit."
+  },
+  {
+   "id": "o16",
+   "title": "Corporate Finance Intern - Gap Year",
+   "company": "Messier Maris & Associés",
+   "snippet": "Boutique de conseil indépendante, nous recherchons un stagiaire pour assister nos équipes sur des mandats de conseil en fusions-acquisitions et restructuration. Modélisation et analyse sectorielle au quotidien.",
+   "expected": "oui",
+   "why": "Conseil M&A en boutique d'affaires."
+  },
+  {
+   "id": "o17",
+   "title": "Analyst Intern - Capital Markets Origination",
+   "company": "Barclays",
+   "snippet": "London-based six-month placement in the debt and equity origination team, supporting execution of bond and equity-linked transactions and client marketing materials.",
+   "expected": "oui",
+   "why": "Origination DCM/ECM à Londres."
+  },
+  {
+   "id": "o18",
+   "title": "Stage Structuration Financements & Émissions obligataires",
+   "company": "HSBC Continental Europe",
+   "snippet": "Vous participez à la structuration d'émissions obligataires corporate, en lien avec les équipes DCM et les banquiers coverage. Analyse de pricing, benchmarks et documentation.",
+   "expected": "oui",
+   "why": "Structuration d'émissions au sein de capital markets."
+  },
+  {
+   "id": "o19",
+   "title": "Stagiaire Corporate Finance / M&A",
+   "company": "Oddo BHF",
+   "snippet": "Vous intégrez l'équipe Corporate Finance à Paris et contribuez à l'analyse de cibles, à la valorisation et à la préparation de teasers et memorandums sur des opérations midcap.",
+   "expected": "oui",
+   "why": "Corporate finance de banque d'affaires avec missions M&A."
+  },
+  {
+   "id": "o20",
+   "title": "Stage - Mergers & Acquisitions - Paris",
+   "company": "Natixis Partners",
+   "snippet": "Au sein de notre équipe M&A, vous assistez les senior bankers sur des opérations de cession et d'acquisition : recherche d'acquéreurs, modèles financiers et suivi de process.",
+   "expected": "oui",
+   "why": "M&A en banque d'affaires."
+  },
+  {
+   "id": "o21",
+   "title": "Investment Banking Intern - Gap Year",
+   "company": "Morgan Stanley",
+   "snippet": "Our London IBD team offers six-month placements from March 2027. You will work on M&A, ECM and DCM transactions across sectors, with exposure to client meetings.",
+   "expected": "oui",
+   "why": "IB multi-produits à Londres."
+  },
+  {
+   "id": "o22",
+   "title": "Stage Business Analyst",
+   "company": "Houlihan Lokey",
+   "snippet": "Rejoignez notre équipe support interne à Paris. Vous assurez le suivi des factures fournisseurs, la mise à jour des bases de données internes et la production de tableaux de reporting administratifs.",
+   "expected": "non",
+   "why": "Titre générique d'une banque d'affaires, mais l'extrait montre un poste administratif sans lien avec les transactions."
+  },
+  {
+   "id": "o23",
+   "title": "Stage Chargé de mission finance",
+   "company": "Rothschild Martin Maurel",
+   "snippet": "Vous assistez le service comptable : saisie et lettrage des écritures, préparation des déclarations de TVA et suivi des notes de frais de l'équipe.",
+   "expected": "non",
+   "why": "Titre séduisant dans une banque d'affaires, mais l'extrait décrit de la comptabilité, exclue."
+  },
+  {
+   "id": "o24",
+   "title": "Equity Research Intern",
+   "company": "Kepler Cheuvreux",
+   "snippet": "Au sein de l'équipe de recherche actions, vous mettez à jour les modèles financiers, rédigez des notes de résultats et assistez l'analyste senior dans ses contacts avec les investisseurs.",
+   "expected": "peut-être",
+   "why": "Equity research, adjacent aux marchés mais pas du conseil ni de l'origination."
+  },
+  {
+   "id": "o25",
+   "title": "Private Equity Intern (Junior Associate)",
+   "company": "Eurazeo",
+   "snippet": "Vous participez à l'analyse de dossiers d'investissement, au sourcing de cibles et à la modélisation d'opérations de LBO sous la supervision de l'équipe d'investissement mid-cap.",
+   "expected": "peut-être",
+   "why": "Private equity, proche du M&A mais buy-side et hors objectif banque d'investissement."
+  },
+  {
+   "id": "o26",
+   "title": "Stage M&A Corporate Development",
+   "company": "Saint-Gobain",
+   "snippet": "Au sein de la direction du développement du Groupe, vous contribuez à l'identification et à l'évaluation de cibles d'acquisition et au suivi des opérations de cession.",
+   "expected": "peut-être",
+   "why": "M&A corporate côté industriel, pertinent mais différent de la banque d'affaires."
+  },
+  {
+   "id": "o27",
+   "title": "Stage Project Manager - Banque de Financement et d'Investissement",
+   "company": "Société Générale",
+   "snippet": "Vous participez à des projets transverses de la BFI : suivi de planning, coordination avec les équipes IT et reporting d'avancement. Pas de contenu de structuration ou d'exécution de transactions.",
+   "expected": "peut-être",
+   "why": "Project manager en banque sans précision, extrait penchant vers du suivi de projet transverse."
+  },
+  {
+   "id": "o28",
+   "title": "Consulting Intern - Financial Strategy",
+   "company": "Oliver Wyman",
+   "snippet": "You will join a team advising banks and insurers on capital allocation, balance sheet strategy and M&A integration. London or Paris office available.",
+   "expected": "peut-être",
+   "why": "Conseil en stratégie financière, lien avec M&A partiel."
+  },
+  {
+   "id": "o29",
+   "title": "Stage Trésorerie et Financement",
+   "company": "TotalEnergies",
+   "snippet": "Au sein de la trésorerie groupe, vous suivez les positions de change, participez à la gestion de la liquidité et contribuez à la préparation de programmes de financement de dette.",
+   "expected": "peut-être",
+   "why": "Trésorerie corporate avec un volet financement, lien indirect avec marchés de capitaux."
+  },
+  {
+   "id": "o30",
+   "title": "Stage Analyste Crédit",
+   "company": "Amundi",
+   "snippet": "Vous analysez la qualité de crédit d'émetteurs corporate, rédigez des fiches de suivi et participez aux comités de gestion obligataire.",
+   "expected": "peut-être",
+   "why": "Analyse crédit buy-side, connexe aux marchés de dette mais pas de la banque d'investissement."
+  },
+  {
+   "id": "o31",
+   "title": "Stage Conseiller Support Client - Financement",
+   "company": "BNP Paribas Leasing Solutions",
+   "snippet": "Vous répondez aux appels et emails des clients PME sur leurs contrats de financement d'équipements, gérez les réclamations et mettez à jour les dossiers dans le CRM.",
+   "expected": "non",
+   "why": "Support client, explicitement exclu."
+  },
+  {
+   "id": "o32",
+   "title": "Stage Comptabilité Générale",
+   "company": "Capgemini",
+   "snippet": "Au sein de la direction financière, vous participez aux clôtures mensuelles, aux rapprochements bancaires et à la saisie des écritures comptables.",
+   "expected": "non",
+   "why": "Comptabilité explicitement exclue."
+  },
+  {
+   "id": "o33",
+   "title": "Stage Auditeur Financier",
+   "company": "Deloitte",
+   "snippet": "Vous participez à des missions d'audit légal : revue de contrôles, tests de détail et préparation de la documentation d'audit pour des clients cotés.",
+   "expected": "non",
+   "why": "Audit explicitement exclu."
+  },
+  {
+   "id": "o34",
+   "title": "Stage Assistant RH - Recrutement",
+   "company": "L'Oréal",
+   "snippet": "Vous accompagnez l'équipe RH sur la gestion des candidatures, l'organisation des entretiens et le suivi de l'intégration des nouveaux arrivants.",
+   "expected": "non",
+   "why": "Ressources humaines explicitement exclues."
+  },
+  {
+   "id": "o35",
+   "title": "Software Engineer Intern - Trading Platform",
+   "company": "Goldman Sachs",
+   "snippet": "You will develop and test Java services supporting the firm's electronic trading platform, working with senior engineers on low-latency components.",
+   "expected": "non",
+   "why": "Développement logiciel exclu malgré le contexte de salle de marchés."
+  },
+  {
+   "id": "o36",
+   "title": "Stage Investment Banking Operations - Settlement",
+   "company": "BNP Paribas",
+   "snippet": "Au sein du back-office, vous assurez le règlement-livraison des opérations, le suivi des breaks et la résolution des anomalies avec les contreparties. Poste purement opérationnel.",
+   "expected": "non",
+   "why": "Titre séduisant mais poste de back-office sans lien avec les opérations de financement."
+  },
+  {
+   "id": "o37",
+   "title": "Stage Analyste - 6 mois",
+   "company": "Lazard",
+   "snippet": "Au sein de l équipe Conseil Financier, vous participez à l exécution de mandats de fusions-acquisitions : modèles de valorisation, préparation des documents de présentation, coordination des due diligences.",
+   "expected": "oui",
+   "why": "titre vague, mais le texte décrit l exécution de mandats M&A"
+  },
+  {
+   "id": "o38",
+   "title": "Stagiaire Corporate Finance",
+   "company": "Société Générale",
+   "snippet": "Rattaché à l équipe Debt Capital Markets, vous préparez des émissions obligataires pour des grands corporates : analyses de marché, documents de présentation aux émetteurs, suivi des carnets d ordres.",
+   "expected": "oui",
+   "why": "titre générique, mais le texte décrit de l origination DCM"
+  }
+ ]
+}

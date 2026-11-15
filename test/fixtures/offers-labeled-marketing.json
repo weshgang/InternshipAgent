@@ -1,0 +1,165 @@
+{
+ "objectif": "Alternance de 12 mois en marketing digital à partir de septembre 2027 à Paris : acquisition (SEO, SEA, social ads), growth, CRM et emailing, analyse de la performance marketing. Je veux une alternance, pas un stage ni un CDI. Pas de vente terrain, pas de finance, pas de RH.",
+ "offers": [
+  {
+   "id": "m01",
+   "title": "Alternance - Chargé(e) d’acquisition digitale (SEA / Social Ads)",
+   "company": "Decathlon",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Vous pilotez les campagnes Google Ads et Meta Ads, optimisez les enchères et suivez le coût d’acquisition.",
+   "expected": "oui",
+   "why": "Acquisition payante, cœur de l’objectif."
+  },
+  {
+   "id": "m02",
+   "title": "Alternance Growth Marketing",
+   "company": "Alan",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Tests A/B sur les pages d’inscription, automatisation des parcours, analyse des cohortes d’utilisateurs.",
+   "expected": "oui",
+   "why": "Growth, cœur de cible."
+  },
+  {
+   "id": "m03",
+   "title": "Alternance CRM & Emailing",
+   "company": "Sephora",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Conception et envoi des campagnes emailing, segmentation de la base clients, suivi des taux d’ouverture et de conversion.",
+   "expected": "oui",
+   "why": "CRM et emailing explicitement visés."
+  },
+  {
+   "id": "m04",
+   "title": "Alternance Chargé de référencement SEO",
+   "company": "ManoMano",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Audit SEO technique, optimisation des contenus, suivi du positionnement et du trafic organique.",
+   "expected": "oui",
+   "why": "SEO explicitement visé."
+  },
+  {
+   "id": "m05",
+   "title": "Alternance - Assistant Marketing Digital",
+   "company": "L’Oréal",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Gestion des campagnes social ads, reporting hebdomadaire des performances, optimisation des landing pages.",
+   "expected": "oui",
+   "why": "Marketing digital orienté performance."
+  },
+  {
+   "id": "m06",
+   "title": "Stage - Chargé de Webmarketing (6 mois)",
+   "company": "Galeries Lafayette",
+   "snippet": "Stage de 6 mois à partir de septembre 2027. Campagnes emailing et SEO.",
+   "expected": "non",
+   "why": "Bon métier mais stage : l’étudiant veut une alternance."
+  },
+  {
+   "id": "m07",
+   "title": "CDI - Traffic Manager",
+   "company": "Cdiscount",
+   "snippet": "CDI, poste à pourvoir immédiatement. Pilotage des campagnes SEA.",
+   "expected": "non",
+   "why": "Bon métier mais CDI."
+  },
+  {
+   "id": "m08",
+   "title": "Alternance Commercial terrain B2B",
+   "company": "Orange",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Prospection terrain, rendez-vous clients, atteinte d’objectifs de vente.",
+   "expected": "non",
+   "why": "Vente terrain explicitement exclue."
+  },
+  {
+   "id": "m09",
+   "title": "Alternance Contrôleur de gestion",
+   "company": "Renault",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Suivi budgétaire, clôtures mensuelles, analyse des écarts.",
+   "expected": "non",
+   "why": "Finance exclue."
+  },
+  {
+   "id": "m10",
+   "title": "Alternance Chargé de recrutement",
+   "company": "Adecco",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Sourcing de candidats, entretiens, suivi des recrutements.",
+   "expected": "non",
+   "why": "RH exclues."
+  },
+  {
+   "id": "m11",
+   "title": "Alternance Chargé de communication",
+   "company": "SNCF",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Rédaction de communiqués, relations presse, communication interne.",
+   "expected": "peut-être",
+   "why": "Communication : voisin du marketing, pas d’acquisition."
+  },
+  {
+   "id": "m12",
+   "title": "Alternance Chef de produit junior",
+   "company": "Danone",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Lancement de produits, études consommateurs, coordination avec les agences.",
+   "expected": "peut-être",
+   "why": "Marketing produit, adjacent au digital."
+  },
+  {
+   "id": "m13",
+   "title": "Alternance Business Analyst",
+   "company": "Fnac Darty",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Analyses pour l’équipe e-commerce, tableaux de bord de ventes.",
+   "expected": "peut-être",
+   "why": "Analytique e-commerce, lien partiel avec la performance marketing."
+  },
+  {
+   "id": "m14",
+   "title": "Alternance Chargé de projet digital",
+   "company": "Leroy Merlin",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Vous pilotez les campagnes Google Ads, menez des tests A/B sur les landing pages et produisez le reporting d’acquisition.",
+   "expected": "oui",
+   "why": "Titre vague, mais le texte décrit de l’acquisition."
+  },
+  {
+   "id": "m15",
+   "title": "Alternance Marketing Digital",
+   "company": "PME Distribution",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Saisie des commandes, accueil téléphonique, administration des ventes.",
+   "expected": "non",
+   "why": "Titre séduisant, missions administratives."
+  },
+  {
+   "id": "m16",
+   "title": "Alternance Community Manager",
+   "company": "Ubisoft",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Animation des réseaux sociaux, modération, création de contenus.",
+   "expected": "peut-être",
+   "why": "Social organique, voisin de l’acquisition."
+  },
+  {
+   "id": "m17",
+   "title": "Alternance Développeur Front-end",
+   "company": "Doctolib",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Développement React, intégration des maquettes.",
+   "expected": "non",
+   "why": "Développement informatique, hors objectif."
+  },
+  {
+   "id": "m18",
+   "title": "Alternance Marketing Analytics",
+   "company": "Back Market",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Suivi des KPIs d’acquisition, attribution multi-canal, tableaux de bord Looker.",
+   "expected": "oui",
+   "why": "Analyse de performance marketing explicitement visée."
+  },
+  {
+   "id": "m19",
+   "title": "Alternance Comptable",
+   "company": "KPMG",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Saisie comptable, rapprochements bancaires.",
+   "expected": "non",
+   "why": "Comptabilité, hors objectif."
+  },
+  {
+   "id": "m20",
+   "title": "Alternance Chargé de marketing événementiel",
+   "company": "Accor",
+   "snippet": "Contrat d’apprentissage de 12 mois, rentrée septembre 2027, Paris. Organisation de salons et d’événements clients.",
+   "expected": "peut-être",
+   "why": "Marketing hors ligne, adjacent."
+  }
+ ]
+}

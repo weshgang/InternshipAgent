@@ -1,0 +1,90 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agent stage</title>
+<style>
+:root{--bg:#f5f4f0;--card:#fff;--ink:#17181c;--mute:#6c707c;--line:#e2e0da;--acc:#1f4ed8;--me:#1f4ed8;--ok:#0f7b4b;--warn:#b45309;--bad:#b42318}
+@media(prefers-color-scheme:dark){:root{--bg:#111215;--card:#1a1c21;--ink:#ecebe8;--mute:#9b9ea8;--line:#2b2e35;--acc:#7da2ff;--me:#3557c9;--ok:#4ac08a;--warn:#f0a35a;--bad:#ff8a7a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;display:flex;flex-direction:column;height:100vh}
+header{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);flex-wrap:wrap}
+#preflight-bar{display:flex;gap:8px;font-size:12px;padding:6px 16px;background:var(--card);border-bottom:1px solid var(--line);align-items:center;flex-wrap:wrap}
+h1{font-size:15px;margin:0}.pill{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}.ok{color:var(--ok);border-color:currentColor}.warn{color:var(--warn);border-color:currentColor}.bad{color:var(--bad);border-color:currentColor}
+#log{flex:1;overflow:auto;padding:16px;max-width:860px;width:100%;margin:0 auto}
+.m{margin:0 0 12px;display:flex}.m.student{justify-content:flex-end}.b{max-width:92%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 13px}
+.student .b{background:var(--me);color:#fff;border-color:var(--me)}.t{white-space:pre-wrap}
+.row{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-top:1px solid var(--line)}.row:first-of-type{border-top:0}.grow{flex:1;min-width:0}.mute{color:var(--mute);font-size:13px}
+a{color:var(--acc)}button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}button.p{background:var(--acc);border-color:var(--acc);color:#fff}button:disabled{opacity:.45;cursor:not-allowed}
+button.tiny{font-size:11px;padding:2px 6px;border-radius:6px}
+input[type=text],textarea{font:inherit;width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 9px}textarea{min-height:120px}
+img.shot{width:150px;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}
+footer{border-top:1px solid var(--line);background:var(--card);padding:10px 16px}footer .in{max-width:860px;margin:0 auto;display:flex;gap:8px}footer textarea{min-height:44px;height:44px;resize:none}
+.chips{max-width:860px;margin:0 auto 8px;display:flex;gap:6px;flex-wrap:wrap}.chips button{font-size:13px;padding:3px 9px;border-radius:99px}
+details{max-width:860px;margin:6px auto 0}pre{white-space:pre-wrap;font-size:12px;max-height:200px;overflow:auto;background:#0d0f12;color:#d7dae0;padding:8px;border-radius:8px}
+.typing{color:var(--mute);font-size:13px;padding:0 16px 8px;max-width:860px;margin:0 auto;width:100%}
+</style></head><body>
+<header><h1 id="who">Agent stage</h1><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><button id="stop" style="display:none" onclick="post('/api/stop')">Arrêter</button><span class="pill" id="mode"></span><span class="pill" id="cost"></span></div></header>
+<div id="preflight-bar">
+  <span class="mute" style="font-weight:600">Sondes pre-flight :</span>
+  <span id="pf-chrome" class="pill">Chrome: test...</span>
+  <span id="pf-jt" class="pill">JobTeaser: test...</span>
+  <span id="pf-gmail" class="pill">Gmail: test...</span>
+  <span id="pf-li" class="pill">LinkedIn: test...</span>
+</div>
+<div id="career-accounts" style="max-width:860px;width:100%;margin:8px auto 0"></div>
+<div id="log"></div><div class="typing" id="typing"></div>
+<footer><div class="chips" id="chips"></div><div class="in"><textarea id="msg" placeholder="Dis-moi quel stage tu cherches…"></textarea><button class="p" onclick="send()">Envoyer</button></div>
+<details><summary class="mute">Journal de l'agent</summary><pre id="journal"></pre></details></footer>
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));let S={},seen=-1;
+const post=(u,b)=>fetch(u,{method:'POST',headers:{'content-type':'application/json','x-demo':'1'},body:JSON.stringify(b||{})}).then(r=>r.json()).then(j=>{if(j.error)alert(j.error);setTimeout(load,300);return j});
+const CHIPS=[
+  'Je veux un stage M&A en césure dès mars 2027 à Paris, pas de finance durable',
+  'Accepte aussi les offres débutant en janvier 2027',
+  'Prépare les 5 meilleures',
+  'Où en es-tu ?',
+  'Contacts : Julie Martin, Analyst M&A, Lazard ; Thomas Petit, VP DCM, BNP Paribas'
+];
+$('chips').innerHTML=CHIPS.map(c=>`<button onclick="$('msg').value=this.textContent">${esc(c)}</button>`).join('');
+function send(){const t=$('msg').value.trim();if(!t)return;$('msg').value='';post('/api/chat',{text:t})}
+$('msg').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
+const vpill=(v,early)=>`<span class="pill ${v=='oui'?'ok':v=='non'?'bad':'warn'}">${early?'Arbitrage janv.':esc(v)}</span>`;
+function shortlist(rows,i){
+  return `<details><summary class="mute">Voir les ${rows.length} offres et les raisons</summary><div>${rows.map(r=>{
+    return `<div class="row">${vpill(r.verdict, r.early)}<div class="grow"><a href="${esc(r.url)}" target="_blank">${esc(r.title)}</a> <span class="mute">${esc(r.company||'')}</span>
+    <div class="mute">${esc(r.reason)}</div></div>
+    ${r.early?`<button class="tiny p" onclick="post('/api/chat',{text:'Accepte janvier pour cette offre'})">Valider janvier</button>`:''}</div>`
+  }).join('')}</div></details>`;
+}
+function apps(rows){return rows.map(r=>`<div class="row"><span class="pill ${r.status=='ready_to_submit'?'ok':'warn'}">${r.status=='ready_to_submit'?'prête':esc(r.status)}</span><div class="grow"><b>${esc(r.offer)}</b><div class="mute">${esc(r.summary)}</div>
+${r.shot?`<a href="/${esc(r.shot)}" target="_blank"><img class="shot" src="/${esc(r.shot)}" alt="Dernière page avant envoi"></a>`:''}</div>
+<button ${S.testMode||r.status!='ready_to_submit'?'disabled':''} title="${S.testMode?'Mode test : jamais envoyé avec l’identité fictive':'Envoi réel'}">Envoyer</button></div>`).join('')}
+function careerAccounts(){
+ const pending=(S.careerAccounts||[]).filter(x=>!x.decision);
+ $('career-accounts').innerHTML=pending.length?`<div class="b" style="border-color:var(--warn)"><b>Compte requis pour continuer</b>${pending.map(x=>`<div class="row"><div class="grow">Le site carrière <b>${esc(x.host)}</b> demande un compte pour ${esc(x.email)}.</div><button onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'existing'})">Compte existant</button><button class="p" onclick="post('/api/career-account',{host:'${esc(x.host)}',decision:'create'})">Créer automatiquement</button></div>`).join('')}</div>`:'';
+}
+function drafts(){return (S.queue||[]).map(x=>`<div class="row"><div class="grow"><b>${esc(x.contact.firstName)} ${esc(x.contact.lastName)}</b> <span class="mute">${esc(x.contact.title)} · ${esc(x.contact.company)} · ${esc(x.email)} (${x.emailStatus=='verified'?'vérifié':'deviné'})${S.testMode?' → envoi vers l’adresse de test':''}</span> <span class="pill ${x.status=='sent'?'ok':x.status=='rejected'?'bad':''}">${esc(x.status)}</span>
+<input type="text" id="s_${x.id}" value="${esc(x.subject)}" style="margin:6px 0"><textarea id="b_${x.id}">${esc(x.body)}</textarea>
+<div style="display:flex;gap:6px;margin-top:6px"><button onclick="post('/api/network/${x.id}/edit',{subject:$('s_${x.id}').value,body:$('b_${x.id}').value})">Modifier</button><button onclick="post('/api/network/${x.id}/reject')">Rejeter</button><button class="p" onclick="post('/api/network/${x.id}/approve')">Valider</button>
+<button ${x.status!='approved'?'disabled':''} onclick="if(confirm('Envoyer maintenant${S.testMode?' (vers l’adresse de test)':''} ?'))post('/api/network/${x.id}/send',{real:true,confirm:'ENVOYER',schedule:false})">Envoyer</button></div></div></div>`).join('')}
+function render(){const c=S.chat||[];if(c.length===seen)return;seen=c.length;
+ $('log').innerHTML=c.map((m,i)=>`<div class="m ${m.role}"><div class="b"><div class="t">${esc(m.text)}</div>${m.type=='shortlist'?shortlist(m.data,i):m.type=='applications'?apps(m.data):m.type=='drafts'&&i==c.map(x=>x.type).lastIndexOf('drafts')?drafts():''}</div></div>`).join('')||'<p class="mute">Écris ce que tu cherches, par exemple : « Je veux un stage M&A en césure dès mars 2027 à Paris ».</p>';
+ $('log').scrollTop=$('log').scrollHeight}
+async function loadPreflight(){
+  try{
+    const pf=await (await fetch('/api/preflight')).json();
+    const setB=(id,s)=>{
+      const el=$(id);if(!el)return;
+      el.className='pill '+(s.ok?'ok':'bad');
+      if(s.ok){el.textContent=`${s.name}: 🟢 ${s.detail||'Connecté'}`;}
+      else{el.innerHTML=`${s.name}: 🔴 ${esc(s.detail)} ${s.actionUrl?`<a href="#" onclick="post('/api/open-tab',{url:'${s.actionUrl}'});return false;" style="text-decoration:underline;margin-left:4px">Ouvrir</a>`:''}`;}
+    };
+    setB('pf-chrome',pf.browser);
+    setB('pf-jt',pf.jobteaser);
+    setB('pf-gmail',pf.gmail);
+    setB('pf-li',pf.linkedin);
+  }catch(e){}
+}
+async function load(){S=await (await fetch('/api/state')).json();$('who').textContent=`Agent stage · ${S.profile.name}`;
+ $('mode').textContent=(S.dryRun?'dry-run':'ENVOI RÉEL')+(S.testMode?' · identité de test':'');$('mode').className='pill '+(S.dryRun?'ok':'bad');
+ $('cost').textContent=`${S.spendEur.toFixed(3)} € / ${S.budgetEur} €`;$('typing').textContent=S.running?`L'agent travaille : ${S.running}…`:'';$('stop').style.display=S.running?'':'none';
+ careerAccounts();if(document.activeElement?.tagName!=='TEXTAREA'&&document.activeElement?.tagName!=='INPUT')seen=-1;render()}
+new EventSource('/events').onmessage=e=>{const j=$('journal');j.textContent+=JSON.parse(e.data)+'\n';j.scrollTop=j.scrollHeight};
+load();loadPreflight();setInterval(load,2000);setInterval(loadPreflight,10000);
+</script></body></html>

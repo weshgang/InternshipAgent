@@ -1,0 +1,10 @@
+profile.json
+profile.real.json
+answers.json
+vault.json
+data/
+runs/
+.env
+node_modules/
+.claude/settings.local.json
+*.log

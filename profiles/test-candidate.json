@@ -1,0 +1,162 @@
+{
+  "identite": {
+    "prenom": "Clara",
+    "nom": "Gold",
+    "email": "sdfsdfsdfdfsdsfdsf589@gmail.com",
+    "telephone": "06 39 98 41 27",
+    "ville": "Paris",
+    "genre": "Femme",
+    "civilite": "Mme",
+    "nationalite": "Française"
+  },
+  "ecole": {
+    "nom": "HEC Paris",
+    "programme": "Master in Management, spécialisation Finance",
+    "annee": "M1",
+    "diplome_prevu": "2028"
+  },
+  "cesure": {
+    "type": "première partie",
+    "debut": "Mars 2027",
+    "duree_mois": "6",
+    "lieux": [
+      "Paris",
+      "Londres"
+    ]
+  },
+  "cibles": {
+    "secteurs": [
+      "banque d'investissement",
+      "M&A",
+      "marchés de capitaux",
+      "finance d'entreprise",
+      "Transaction Services",
+      "évaluation",
+      "conseil en stratégie"
+    ],
+    "postes": [
+      "analyste stagiaire",
+      "M&A",
+      "DCM",
+      "ECM",
+      "corporate finance",
+      "Transaction Services",
+      "valuation",
+      "conseil en stratégie"
+    ],
+    "entreprises_prioritaires": [
+      "Goldman Sachs",
+      "Lazard",
+      "Rothschild & Co",
+      "BNP Paribas",
+      "Société Générale"
+    ],
+    "exclusions": [
+      "finance durable",
+      "ESG",
+      "marketing",
+      "communication",
+      "comptabilité",
+      "audit",
+      "ressources humaines",
+      "développement informatique",
+      "rien d'autre que le private equity"
+    ],
+    "objectif": "Je cherche un stage en finance durable."
+  },
+  "experiences": [
+    {
+      "entreprise": "Goldman Sachs",
+      "poste": "Summer Analyst, Investment Banking Division",
+      "dates": "06/2026 - 08/2026",
+      "missions": [
+        "Participation à 2 mandats M&A sell-side dans les services financiers",
+        "Construction de modèles de valorisation (DCF, comparables) et de pitch books",
+        "Support au suivi des documents de due diligence"
+      ]
+    },
+    {
+      "entreprise": "HEC Finance Club",
+      "poste": "Responsable Corporate Finance",
+      "dates": "09/2025 - 06/2026",
+      "missions": [
+        "Organisation de 6 conférences avec des professionnels de la banque d'affaires",
+        "Préparation de 40 étudiants aux entretiens techniques"
+      ]
+    },
+    {
+      "entreprise": "Cabinet de conseil en gestion de patrimoine (fictif)",
+      "poste": "Stagiaire analyste",
+      "dates": "07/2025 - 08/2025",
+      "missions": [
+        "Analyse de portefeuilles et reporting mensuel",
+        "Veille sur les marchés obligataires"
+      ]
+    }
+  ],
+  "competences": [
+    "Modélisation financière (DCF, LBO)",
+    "Excel avancé",
+    "PowerPoint / pitch books",
+    "Bloomberg, FactSet",
+    "Python (bases)"
+  ],
+  "langues": [
+    "Français : natif",
+    "Anglais : courant (TOEIC 985)",
+    "Allemand : intermédiaire"
+  ],
+  "documents": {
+    "cv_fr": "./profiles/test-cv.pdf",
+    "cv_en": "./profiles/test-cv.pdf"
+  },
+  "reponses_types": {
+    "disponibilite": "01/03/2027",
+    "pretentions": "Selon la grille de la banque",
+    "droit_au_travail": "Oui",
+    "permis": "Non",
+    "mobilite": "Paris, Londres",
+    "pourquoi_nous": "Je souhaite approfondir mon expérience en banque d'investissement après mon stage chez Goldman Sachs, au sein d'une équipe exigeante où la rigueur analytique compte.",
+    "certificat_scolarite": "Oui",
+    "convention_stage": "Oui, convention de 6 mois fournie par HEC Paris",
+    "origine_candidature": "JobTeaser"
+  },
+  "linkedin_url": "",
+  "consentements": {
+    "cgu_sites": true,
+    "ia_screening": true,
+    "vivier": true,
+    "reset_mot_de_passe": false,
+    "creation_comptes_ats": true,
+    "partage_donnees": true
+  },
+  "formations": [
+    {
+      "etablissement": "HEC Paris",
+      "diplome": "Master in Management, spécialisation Finance",
+      "dates": "2025 - 2028",
+      "date_debut": "2025-09-01",
+      "date_fin": "2028-06-30",
+      "en_cours": true
+    },
+    {
+      "etablissement": "Lycée Louis-le-Grand",
+      "diplome": "Classes préparatoires ECG",
+      "dates": "2022 - 2024",
+      "date_debut": "2022-09-01",
+      "date_fin": "2024-06-30",
+      "en_cours": false
+    }
+  ],
+  "preferences": {
+    "offres_max_jours": 7,
+    "jobteaser_categories": [
+      "bebf2262-4c78-4232-9f83-813bb749a847",
+      "10803721-d7e6-4f1a-a7b4-85f078c6e457",
+      "7d0f2f62-abfa-49d9-a1a5-2722d683e68a",
+      "014d3e7d-30c3-47e9-ace6-78c2ed9932fb"
+    ],
+    "jobteaser_categories_labels": "Finance d'entreprise, Finance de marché, Economie, Management Conseil & Stratégie (ordre supposé = ordre des clics observés)",
+    "jobteaser_location": "lat=48.853495&lng=2.348391&localized_location=Paris%2C+France&location=France%3A%3A%C3%8Ele-de-France%3A%3AParis%3A%3AParis%3A%3A_bG9jYWxpdHk6ZnI6Y2l0eTpmemVIZnJnZDJQekhETTNCZXE0NlUyL3pFMG89&radius=30"
+  }
+}

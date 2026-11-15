@@ -1,0 +1,46 @@
+{
+  "name": "mvp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsx --test test/auth/*.test.ts test/scope/*.test.ts test/networking/*.test.ts test/agent/*.test.ts",
+    "connect": "tsx src/connect.ts",
+    "agent": "tsx src/agent.ts",
+    "s1": "tsx src/fill.ts s1-jobteaser \"https://dauphine.jobteaser.com/fr/job-offers/561bfda0-f8a8-4f42-80d1-43b25f73ae08-air-liquide-stage-siege-social-debt-capital-market-dcm-rating-h-f\"",
+    "fill": "tsx src/fill.ts",
+    "offers": "tsx src/offers.ts",
+    "parallel": "tsx src/parallel.ts",
+    "onboard": "tsx src/onboard.ts",
+    "gmailtest": "tsx src/gmailtest.ts",
+    "vault:add": "tsx src/auth/cli.ts add",
+    "vault:list": "tsx src/auth/cli.ts list",
+    "test:auth": "tsx --test test/auth/*.test.ts",
+    "auth:stats": "tsx -e \"import {authStats} from \\\"./src/auth/loginOrchestrator.ts\\\";console.table(authStats())\"",
+    "batch": "tsx src/batch.ts",
+    "network": "tsx src/networking/run.ts",
+    "ui": "tsx src/ui/server.ts",
+    "eval:match": "tsx src/evalMatch.ts",
+    "select": "tsx src/select.ts",
+    "eval:fill": "tsx src/evalFill.ts",
+    "eval:drafts": "tsx src/evalDrafts.ts",
+    "brief": "tsx src/brief.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "@google/genai": "^3.3.0",
+    "dotenv": "^18.0.10",
+    "keytar": "^7.9.0",
+    "otpauth": "^9.6.0",
+    "playwright-core": "^1.65.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
