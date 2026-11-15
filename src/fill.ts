@@ -306,10 +306,10 @@ for (let n = 1; n <= MAX_PAGES; n++) {
     status = confirmed ? 'success' : 'failed'; summary = confirmed ? 'application confirmed by the page' : 'the model said "done" but the page shows no confirmation'; break;
   }
   if (testMode() && site.ats === 'jobteaser' && /candidature simplifi/i.test(`${nx.label ?? ''} ${nx.reason ?? ''}`)) { status = 'skipped'; summary = 'JobTeaser simplified application uses the real JobTeaser profile: never with the test identity'; break; }
+  const isFinal = nx.action === 'submit' || FINAL_SUBMIT.test(nx.label ?? '');
+  if (isFinal && DRY_RUN) { status = failures ? 'partial' : 'ready_to_submit'; summary = `stopped before "${nx.label}" (DRY_RUN)${failures ? `, ${failures} field(s) NOT filled` : ''}`; break; } // before the guard: a final button proposed as a plain "click" is the dry-run's success, not a refusal
   const gv = guardAction({ tool: 'click', name: nx.label }, { dryRun: DRY_RUN, onLoginPage: false, facts: '', host: site.host });
   if (!gv.ok) { status = 'failed'; summary = `refused: ${gv.reason}`; console.log(`  [guard] ${summary}`); break; }
-  const isFinal = nx.action === 'submit' || FINAL_SUBMIT.test(nx.label ?? '');
-  if (isFinal && DRY_RUN) { status = failures ? 'partial' : 'ready_to_submit'; summary = `stopped before "${nx.label}" (DRY_RUN)${failures ? `, ${failures} field(s) NOT filled` : ''}`; break; }
   if (!nx.ref) { summary = 'no next ref'; break; }
   const popup = context.waitForEvent('page', { timeout: 4000 }).catch(() => null); // "Postuler" often opens the external site in a new tab
   await page.locator(`aria-ref=${nx.ref}`).click({ timeout: 8000 }).catch((e) => console.log(`  ! click failed: ${e.message.split('\n')[0]}`));
