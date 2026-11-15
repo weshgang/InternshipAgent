@@ -224,7 +224,13 @@ for (let n = 1; n <= MAX_PAGES; n++) {
   if (nx.action === 'need_email_code') { // read the code in Gmail, then plan the SAME page again (it will fill a `code` field)
     const m = await readEmailCode(context, nx.reason ?? site.host, usedCodes, prune, t0);
     llmCalls += m.calls; costUsd += m.cost;
-    if (m.error) { status = 'failed'; summary = m.error; break; }
+    if (m.error) { // an email the program could not read is not a failed application: the student can paste the code (once per site, the Chrome profile keeps the session)
+      if (process.env.NO_ASK) { status = 'needs_human'; summary = `code de vérification email non lu automatiquement (${m.error})`; break; }
+      const typed = (await ask(`Je n'ai pas pu lire le code de vérification envoyé par ${nx.reason ?? site.host} (${m.error}). Colle ici le code reçu par email :`)).trim();
+      if (!typed) { status = 'needs_human'; summary = `code de vérification email non fourni (${m.error})`; break; }
+      emailCode = typed; usedCodes.add(typed);
+      await page.bringToFront(); lastState = null; continue;
+    }
     await page.bringToFront();
     if (m.link && !m.code) { await page.goto(m.link, { waitUntil: 'domcontentloaded' }); }
     emailCode = m.code; lastState = null;

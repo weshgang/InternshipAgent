@@ -17,7 +17,7 @@
   },
   "cesure": {
     "type": "première partie",
-    "debut": "Mars 2027",
+    "debut": "janvier 2027",
     "duree_mois": "6",
     "lieux": [
       "Paris",
@@ -62,7 +62,7 @@
       "développement informatique",
       "rien d'autre que le private equity"
     ],
-    "objectif": "Je cherche un stage en finance durable."
+    "objectif": "Trouver un stage en private equity (capital-investissement) à Paris ou Londres, au sein d'une société de gestion ou d'un fonds qui investit dans des entreprises."
   },
   "experiences": [
     {
@@ -111,7 +111,7 @@
     "cv_en": "./profiles/test-cv.pdf"
   },
   "reponses_types": {
-    "disponibilite": "01/03/2027",
+    "disponibilite": "01/01/2027",
     "pretentions": "Selon la grille de la banque",
     "droit_au_travail": "Oui",
     "permis": "Non",
@@ -158,5 +158,133 @@
     ],
     "jobteaser_categories_labels": "Finance d'entreprise, Finance de marché, Economie, Management Conseil & Stratégie (ordre supposé = ordre des clics observés)",
     "jobteaser_location": "lat=48.853495&lng=2.348391&localized_location=Paris%2C+France&location=France%3A%3A%C3%8Ele-de-France%3A%3AParis%3A%3AParis%3A%3A_bG9jYWxpdHk6ZnI6Y2l0eTpmemVIZnJnZDJQekhETTNCZXE0NlUyL3pFMG89&radius=30"
+  },
+  "recherche": {
+    "titre": "Private equity",
+    "objectif": "Trouver un stage en private equity (capital-investissement) à Paris ou Londres, au sein d'une société de gestion ou d'un fonds qui investit dans des entreprises.",
+    "contrats": [
+      "stage"
+    ],
+    "lieux": [
+      "Paris",
+      "Londres"
+    ],
+    "coeur": [
+      {
+        "role": "Stagiaire / analyste en private equity (buyout, capital transmission)",
+        "signes": "sourcing d'opportunités, analyse de dossiers d'investissement, modèles LBO, valorisation, due diligence, mémos d'investissement, comité d'investissement, suivi de participations"
+      },
+      {
+        "role": "Stagiaire en growth equity / venture capital",
+        "signes": "sourcing de startups et scale-ups, analyse de marché, business plan, term sheet, tours de financement, suivi du portefeuille"
+      },
+      {
+        "role": "Stagiaire en infrastructure, private debt ou real assets",
+        "signes": "analyse d'actifs ou de dettes privées, modélisation financière, structuration de financement, direct lending, mezzanine, suivi d'investissements"
+      },
+      {
+        "role": "Stagiaire en fonds de fonds / secondaire (fund investing)",
+        "signes": "sélection de fonds, due diligence de gérants, analyse de performance (TRI, multiple), reporting aux investisseurs, transactions secondaires"
+      },
+      {
+        "role": "Stagiaire en suivi de portefeuille / asset management de participations",
+        "signes": "reporting des participations, suivi de la performance des sociétés en portefeuille, value creation, préparation de sorties, board meetings"
+      }
+    ],
+    "adjacent": [
+      {
+        "role": "Banque d'investissement (M&A, LevFin, ECM, DCM)",
+        "pourquoi": "Même modélisation et exécution d'opérations, souvent un tremplin vers le PE, mais côté banque conseil."
+      },
+      {
+        "role": "Transaction services / due diligence financière",
+        "pourquoi": "Analyse financière de cibles pour le compte de fonds d'investissement, très proche du travail PE."
+      },
+      {
+        "role": "Corporate development / M&A côté entreprise",
+        "pourquoi": "Acquisitions et cessions, valorisation et modélisation, vues côté industriel plutôt que côté fonds."
+      },
+      {
+        "role": "Conseil en stratégie (due diligence commerciale pour fonds)",
+        "pourquoi": "Analyse de marché et de cibles pour des investisseurs PE."
+      },
+      {
+        "role": "Relations investisseurs / levée de fonds (fundraising, investor relations de fonds)",
+        "pourquoi": "Fonction d'une société de gestion PE, plus commerciale que l'investissement lui-même."
+      },
+      {
+        "role": "Évaluation / valorisation (valuation)",
+        "pourquoi": "Valorisation d'entreprises et d'actifs non cotés, compétence centrale du PE."
+      },
+      {
+        "role": "Asset management / analyse financière actions",
+        "pourquoi": "Analyse d'entreprises côté investisseur, mais sur les marchés cotés."
+      },
+      {
+        "role": "Analyse de crédit / financement d'acquisitions en banque",
+        "pourquoi": "Structuration de dette pour des opérations LBO, côté prêteur."
+      }
+    ],
+    "exclu": [
+      {
+        "fonction": "Finance durable / ESG",
+        "signes": "reporting extra-financier, notation ESG, taxonomie européenne, CSRD, investissement responsable, impact"
+      },
+      {
+        "fonction": "Marketing et communication",
+        "signes": "campagnes, réseaux sociaux, contenu, marque, événementiel, relations presse"
+      },
+      {
+        "fonction": "Comptabilité",
+        "signes": "saisie d'écritures, comptabilité fournisseurs ou clients, clôture comptable, lettrage, rapprochements bancaires, déclarations de TVA"
+      },
+      {
+        "fonction": "Audit",
+        "signes": "audit légal, commissariat aux comptes, tests de contrôle, revue de conformité, audit interne, missions de certification"
+      },
+      {
+        "fonction": "Ressources humaines",
+        "signes": "recrutement, paie, administration du personnel, formation, relations sociales"
+      },
+      {
+        "fonction": "Développement informatique",
+        "signes": "programmation, développement logiciel, DevOps, data engineering, architecture technique"
+      }
+    ],
+    "titres_trompeurs": [
+      {
+        "titre": "Analyste financier",
+        "comment_trancher": "Retenir si les missions portent sur l'analyse de cibles, la modélisation LBO, la valorisation ou le suivi de participations ; écarter si ce sont de la comptabilité, du reporting ou de l'ESG."
+      },
+      {
+        "titre": "Investment Analyst",
+        "comment_trancher": "Retenir si l'offre vient d'un fonds ou d'une société de gestion non cotée et décrit du sourcing et de l'analyse de deals ; écarter si c'est de l'analyse d'actions cotées ou de la recherche générale."
+      },
+      {
+        "titre": "Business Analyst",
+        "comment_trancher": "Retenir uniquement si le texte décrit de l'analyse d'investissement ou de la modélisation financière pour un fonds ; écarter si c'est de l'analyse de données, du SI ou du produit."
+      },
+      {
+        "titre": "Chargé d'études financières",
+        "comment_trancher": "Retenir si les études portent sur des cibles, des opérations ou des modèles de valorisation pour un investisseur ; écarter si elles portent sur des marchés cotés ou de la conformité."
+      },
+      {
+        "titre": "Stagiaire finance",
+        "comment_trancher": "Lire les missions et l'employeur : un fonds avec sourcing, due diligence ou suivi de portefeuille pour retenir ; comptabilité, audit ou ESG pour écarter."
+      }
+    ],
+    "mots_exclus_titre": [
+      "audit",
+      "comptabilité",
+      "comptable",
+      "marketing",
+      "communication",
+      "ressources humaines",
+      "RH",
+      "développeur",
+      "ESG",
+      "finance durable"
+    ],
+    "a_confirmer": []
   }
 }

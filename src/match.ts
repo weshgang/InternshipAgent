@@ -1,11 +1,12 @@
 import { complete } from './llm/index.js';
 
 // Étape 3 bis : choisir les offres selon l'objectif de l'étudiant.
-// 1. exclusions in the title: dropped by the code; 2. pass 1 on titles (one call); 3. pass 2 on the full text of "oui" and "peut-être"
-// (titles mislead both ways); only a final "oui" is applied to, "peut-être" stays for the student to decide.
+// 1. exclusions in the title: dropped by the code; 2. pass 1 on titles (one call per 25): the student's pages are NOT opened for the others;
+// 3. pass 2 opens only the offers whose title matches ("oui") and those whose title is too vague to place ("peut-être" with open=true), to confirm them
+// and read their start date; a neighbouring or excluded title is never opened. Only a final "oui" is applied to, "peut-être" stays for the student to decide.
 export type Offer = { id: string; title: string; company?: string; text?: string; url?: string };
 export type Verdict = 'oui' | 'peut-être' | 'non';
-export type Judged = { id: string; verdict: Verdict; score: number; reason: string; start?: string; early?: boolean };
+export type Judged = { id: string; verdict: Verdict; score: number; reason: string; start?: string; early?: boolean; open?: boolean };
 export type StartCheckResult = string | { verdict: Verdict; reason: string; early?: boolean } | null;
 export type JudgeFn = (offers: Offer[], depth: 'title' | 'full') => Promise<Judged[]>;
 
@@ -22,7 +23,7 @@ export async function rankOffers(o: { offers: Offer[]; exclusions: string[]; jud
   const chunks = async (list: Offer[], size: number, depth: 'title' | 'full') => { const r: Judged[] = []; for (let i = 0; i < list.length; i += size) r.push(...(await o.judge(list.slice(i, i + size), depth))); return r; }; // one answer per call stays under the output limit
   const pass1 = kept.length ? await chunks(kept, 25, 'title') : [];
   for (const j of pass1) out.set(j.id, { ...j, score: clamp(j.score) });
-  const second = kept.filter((of) => out.get(of.id)?.verdict !== 'non');
+  const second = kept.filter((of) => { const j = out.get(of.id); return j?.verdict === 'oui' || (j?.verdict === 'peut-être' && j.open === true); });
   if (o.fetchText && second.length) {
     const withText: Offer[] = [];
     for (const of of second) { // one page at a time: human pace on the job board
@@ -45,7 +46,7 @@ export async function rankOffers(o: { offers: Offer[]; exclusions: string[]; jud
 }
 
 // The real judge: Haiku, one call per batch. Generic rules here; what counts for THIS student comes from the search brief (src/brief.ts).
-const schema = { type: 'object', properties: { verdicts: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, verdict: { type: 'string', enum: ['oui', 'peut-être', 'non'] }, score: { type: 'number' }, reason: { type: 'string' }, start: { type: 'string' } }, required: ['id', 'verdict', 'score', 'reason', 'start'] } } }, required: ['verdicts'] };
+const schema = { type: 'object', properties: { verdicts: { type: 'array', items: { type: 'object', properties: { id: { type: 'string' }, verdict: { type: 'string', enum: ['oui', 'peut-être', 'non'] }, score: { type: 'number' }, reason: { type: 'string' }, start: { type: 'string' }, open: { type: 'boolean' } }, required: ['id', 'verdict', 'score', 'reason', 'start', 'open'] } } }, required: ['verdicts'] };
 // Same judge for the real search and the evaluation: the brief (or, before one exists, the raw targets) plus the period the student is looking for.
 export const judgeFor = (profile: { recherche?: object; cibles?: object; cesure?: unknown; reponses_types?: { disponibilite?: string } }) =>
   makeJudge({ ...(profile.recherche ? { brief: profile.recherche } : { cibles: profile.cibles }), periode: profile.cesure, disponibilite: profile.reponses_types?.disponibilite });
@@ -70,6 +71,7 @@ Judge the actual work described, not the prestige of the company or the wording 
 
 <output>
 - start: the real start month written in the offer, as YYYY-MM (look everywhere: "Date de prise de fonction 05/07/2027", "à partir de juillet 2027", "January 2027"); "" if none or only "dès que possible". Extract it but do not judge it: the program compares it with the student's availability, so a start date never changes your verdict.
+- open: only for a "peut-être" in the title pass. Ask: could the offer text turn this into a "oui"? true if yes, i.e. the title names the field or the team but not the work ("Assistant Marketing Digital", "Chargé de projet digital", "Investment Banking Division", "Analyste"). false if the title already names a different role that the text would not change ("Equity Research", "Trader", "Community Manager"): opening it would teach nothing and the student judges it from the title. Always false for "oui", "non" and in the full pass.
 - score 0-100 = fit of the work with the objective.
 - reason = one short French sentence naming the decisive fact.
 - Use only what the offer says: no invented responsibilities or requirements.
