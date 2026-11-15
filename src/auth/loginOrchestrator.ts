@@ -107,11 +107,15 @@ export async function login(page: Page, d: AuthDeps): Promise<LoginResult> {
   if (entry && budget()) {
     if (await viaVault(page, d, entry)) { await say('vault credentials'); await d.vault.set(origin, { ...entry, last_used_at: new Date().toISOString() }); return finish({ ok: true, method: 'vaultCredentials' }); }
     await say('vault credentials did not work');
-  } else if (entry) await say('3 attempts already used today');
+  } else if (entry) { // nothing was tried: never report the credentials as rejected, and do not burn a sign-up or a reset on a guess
+    await say('daily login attempts used up');
+    return finish({ ok: false, method: 'askHuman', error: `${d.maxAttempts ?? 3} tentatives de connexion déjà utilisées aujourd'hui sur ${host} : réessayer demain` });
+  }
 
   if (entry && entry.created_by === 'agent' && !entry.last_used_at && d.consent.creation_comptes_ats && !d.signupTried?.has(host)) {
-    // created by the agent but never used to log in: the sign-up was probably interrupted, so the account may not exist. Forget it and register again once.
-    await d.vault.remove(origin); d.signupTried?.add(host); await say('stale agent password (never used): registering again'); return finish({ ok: false, method: 'needsSignup' });
+    // created by the agent but never used to log in: the sign-up was probably interrupted. Register again once WITH THE SAME password (the form reuses
+    // the vault entry): if the account does exist but is not activated yet, deleting the entry would lose its only password.
+    d.signupTried?.add(host); await say('agent password never used: registering again with it'); return finish({ ok: false, method: 'needsSignup' });
   }
   if (entry && d.escalate) { // saved credentials rejected: let the model read the site's message (account not activated? wrong password?)
     const msg = (await page.locator('[role=alert], [class*=error i], [class*=alert i], [class*=invalid i]').allInnerTexts().catch(() => [])).join(' | ').slice(0, 300);

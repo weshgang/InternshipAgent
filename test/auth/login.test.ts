@@ -84,9 +84,16 @@ test('7 no account and creation allowed: hand over to the sign-up flow once', { 
   await t.page.goto(`${t.site.base}/login`);
   assert.equal((await login(t.page, t.deps)).method, 'needsSignup'); assert.ok(t.deps.signupTried.has(new URL(t.site.base).host)); await t.done();
 });
-test('8 stale agent password (never used) is dropped and sign-up is retried, not a login loop', { skip }, async () => {
+test('8 never-used agent password: sign-up is retried with the SAME password (kept: the account may exist but not be activated yet), not a login loop', { skip }, async () => {
   const t = await setup(); t.deps.consent = { creation_comptes_ats: true }; t.deps.signupTried = new Set(); t.deps.escalate = true;
   await t.vault.set(t.site.base, { username: 'a@b.fr', password: 'never-registered-1', created_by: 'agent' });
   await t.page.goto(`${t.site.base}/login`);
-  assert.equal((await login(t.page, t.deps)).method, 'needsSignup'); assert.equal(await t.vault.get(t.site.base), undefined); await t.done();
+  assert.equal((await login(t.page, t.deps)).method, 'needsSignup'); assert.equal((await t.vault.get(t.site.base))?.password, 'never-registered-1'); await t.done();
+});
+test('9 daily attempt budget used up: says so, never reports the credentials as rejected (nothing was tried)', { skip }, async () => {
+  const t = await setup(); t.deps.escalate = true; t.deps.maxAttempts = 0;
+  await t.vault.set(t.site.base, { username: 'a@b.fr', password: PW, created_by: 'agent' });
+  await t.page.goto(`${t.site.base}/login`);
+  const r = await login(t.page, t.deps);
+  assert.notEqual(r.method, 'needsHelp'); assert.match(r.error ?? '', /tentatives|attempts/i); await t.done();
 });
